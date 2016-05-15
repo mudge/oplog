@@ -1,0 +1,8 @@
+[package]
+name = "tailspin"
+version = "0.1.0"
+authors = ["Paul Mucur <mudge@mudge.name>"]
+
+[dependencies]
+bson = "0.2.0"
+mongodb = "0.1.4"
