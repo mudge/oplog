@@ -13,15 +13,17 @@ fn main() {
 
     let coll = client.db("local").collection("oplog.rs");
 
-    let mut opts = FindOptions::new();
-    opts.cursor_type = CursorType::Tailable;
-    let mut cursor = coll.find(None, Some(opts)).expect("Failed to execute find");
-    let results = cursor.next_n(3).expect("Failed to retrieve documents");
-
-    for result in results {
-        match result.get("op") {
-            Some(&Bson::String(ref op)) => println!("op: {}", op),
-            _ => panic!("Expected string!"),
-        };
+    loop {
+        let mut opts = FindOptions::new();
+        opts.cursor_type = CursorType::TailableAwait;
+        opts.no_cursor_timeout = true;
+        let cursor = coll.find(None, Some(opts)).expect("Failed to execute find");
+        for result in cursor {
+            if let Ok(item) = result {
+                if let Some(&Bson::String(ref op)) = item.get("op") {
+                    println!("op: {}", op);
+                }
+            }
+        }
     }
 }
