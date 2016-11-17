@@ -1,4 +1,4 @@
-# Tailspin
+# Tailspin [![Build Status](https://travis-ci.org/mudge/tailspin.svg?branch=master)](https://travis-ci.org/mudge/tailspin)
 
 This is an in-progress exercise in learning [Rust](https://www.rust-lang.org/)
 by implementing a library that tails a [MongoDB
