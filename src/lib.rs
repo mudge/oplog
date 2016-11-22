@@ -1,45 +1,46 @@
+#[macro_use(bson, doc)]
 extern crate bson;
 extern crate mongodb;
+extern crate chrono;
 
-use std::result;
-
-use mongodb::{Client, Error, ThreadedClient};
+use bson::ValueAccessError;
+use mongodb::{Client, ThreadedClient};
 use mongodb::cursor::Cursor;
 use mongodb::db::ThreadedDatabase;
 use mongodb::coll::options::{FindOptions, CursorType};
-
-type Result<T> = result::Result<T, Error>;
+use chrono::*;
 
 pub struct Oplog {
     cursor: Cursor,
 }
 
 #[derive(PartialEq, Debug)]
-pub enum OperationType {
-    Insert,
-    Update,
-    Delete,
-    Command,
-    Database,
-    Noop
+pub enum Operation<'a> {
+    Insert { id: i64, namespace: &'a str },
+    Update { id: i64, namespace: &'a str },
+    Delete { id: i64, namespace: &'a str },
+    Command { id: i64, namespace: &'a str },
+    Database { id: i64, namespace: &'a str },
+    Noop { id: i64, timestamp: DateTime<UTC> },
+    Unknown
 }
 
-impl<'a> From<&'a str> for OperationType {
-    fn from(a: &'a str) -> OperationType {
-        match a {
-            "i" => OperationType::Insert,
-            "u" => OperationType::Update,
-            "d" => OperationType::Delete,
-            "c" => OperationType::Command,
-            "db" => OperationType::Database,
-            _ => OperationType::Noop
+impl<'a> Operation<'a> {
+    pub fn new(document: bson::Document) -> Result<Operation<'a>, ValueAccessError> {
+        match document.get_str("op") {
+            Ok("n") => Operation::noop(document),
+            _ => Err(ValueAccessError::UnexpectedType),
         }
     }
-}
 
-impl From<String> for OperationType {
-    fn from(a: String) -> OperationType {
-        OperationType::from(&*a)
+    pub fn noop(document: bson::Document) -> Result<Operation<'a>, ValueAccessError> {
+        let h = try!(document.get_i64("h"));
+        let ts = try!(document.get_time_stamp("ts"));
+
+        let seconds = ts >> 32;
+        let nanoseconds = ((ts & 0xFFFFFFFF) * 1000000) as u32;
+
+        Ok(Operation::Noop { id: h, timestamp: UTC.timestamp(seconds, nanoseconds) })
     }
 }
 
@@ -56,7 +57,7 @@ impl Iterator for Oplog {
 }
 
 impl Oplog {
-    pub fn new(client: Client) -> Result<Oplog> {
+    pub fn new(client: Client) -> Result<Oplog, mongodb::Error> {
         let coll = client.db("local").collection("oplog.rs");
 
         let mut opts = FindOptions::new();
@@ -70,40 +71,28 @@ impl Oplog {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use bson::Bson;
+    use chrono::*;
 
     #[test]
-    fn it_converts_i_to_insert_operation() {
-        assert_eq!(OperationType::Insert, OperationType::from("i"));
-        assert_eq!(OperationType::Insert, OperationType::from("i".to_string()));
-    }
+    fn operation_converts_noops() {
+        let doc = doc! {
+            "ts" => (Bson::TimeStamp(1479419535 << 32)),
+            "h" => (-2135725856567446411i64),
+            "v" => 2,
+            "op" => "n",
+            "ns" => "",
+            "o" => {
+                "msg" => "initiating set"
+            }
+        };
 
-    #[test]
-    fn it_converts_u_to_update_operation() {
-        assert_eq!(OperationType::Update, OperationType::from("u"));
-        assert_eq!(OperationType::Update, OperationType::from("u".to_string()));
-    }
-
-    #[test]
-    fn it_converts_d_to_delete_operation() {
-        assert_eq!(OperationType::Delete, OperationType::from("d"));
-        assert_eq!(OperationType::Delete, OperationType::from("d".to_string()));
-    }
-
-    #[test]
-    fn it_converts_db_to_database_operation() {
-        assert_eq!(OperationType::Database, OperationType::from("db"));
-        assert_eq!(OperationType::Database, OperationType::from("db".to_string()));
-    }
-
-    #[test]
-    fn it_converts_n_to_noop_operation() {
-        assert_eq!(OperationType::Noop, OperationType::from("n"));
-        assert_eq!(OperationType::Noop, OperationType::from("n".to_string()));
-    }
-
-    #[test]
-    fn it_converts_c_to_command_operation() {
-        assert_eq!(OperationType::Command, OperationType::from("c"));
-        assert_eq!(OperationType::Command, OperationType::from("c".to_string()));
+        match Operation::new(doc).unwrap() {
+            Operation::Noop { id, timestamp } => {
+                assert_eq!(-2135725856567446411i64, id);
+                assert_eq!(UTC.timestamp(1479419535, 0), timestamp);
+            },
+            _ => panic!("Unexpected type of operation"),
+        }
     }
 }
