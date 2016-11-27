@@ -17,6 +17,18 @@ pub enum OplogError {
     UnknownOperation(String),
 }
 
+impl From<bson::ValueAccessError> for OplogError {
+    fn from(original: bson::ValueAccessError) -> OplogError {
+        OplogError::MissingField(original)
+    }
+}
+
+impl From<mongodb::Error> for OplogError {
+    fn from(original: mongodb::Error) -> OplogError {
+        OplogError::Database(original)
+    }
+}
+
 type Result<T> = result::Result<T, OplogError>;
 
 pub struct Oplog {
@@ -31,12 +43,11 @@ pub enum Operation<'a> {
     Command { id: i64, namespace: &'a str },
     Database { id: i64, namespace: &'a str },
     Noop { id: i64, timestamp: DateTime<UTC>, document: &'a bson::Document },
-    Unknown
 }
 
 impl<'a> Operation<'a> {
     pub fn new(document: &'a bson::Document) -> Result<Operation<'a>> {
-        let op = try!(document.get_str("op").map_err(OplogError::MissingField));
+        let op = try!(document.get_str("op"));
 
         match op {
             "n" => document_to_noop(document),
@@ -47,18 +58,18 @@ impl<'a> Operation<'a> {
 }
 
 fn document_to_noop(document: &bson::Document) -> Result<Operation> {
-    let h = try!(document.get_i64("h").map_err(OplogError::MissingField));
-    let ts = try!(document.get_time_stamp("ts").map_err(OplogError::MissingField));
-    let o = try!(document.get_document("o").map_err(OplogError::MissingField));
+    let h = try!(document.get_i64("h"));
+    let ts = try!(document.get_time_stamp("ts"));
+    let o = try!(document.get_document("o"));
 
     Ok(Operation::Noop { id: h, timestamp: timestamp_to_datetime(ts), document: o })
 }
 
 fn document_to_insert(document: &bson::Document) -> Result<Operation> {
-    let h = try!(document.get_i64("h").map_err(OplogError::MissingField));
-    let ts = try!(document.get_time_stamp("ts").map_err(OplogError::MissingField));
-    let o = try!(document.get_document("o").map_err(OplogError::MissingField));
-    let ns = try!(document.get_str("ns").map_err(OplogError::MissingField));
+    let h = try!(document.get_i64("h"));
+    let ts = try!(document.get_time_stamp("ts"));
+    let o = try!(document.get_document("o"));
+    let ns = try!(document.get_str("ns"));
 
     Ok(Operation::Insert { id: h, timestamp: timestamp_to_datetime(ts), document: o, namespace: ns })
 }
@@ -90,7 +101,7 @@ impl Oplog {
         opts.cursor_type = CursorType::TailableAwait;
         opts.no_cursor_timeout = true;
 
-        coll.find(None, Some(opts)).map(|cursor| Oplog { cursor: cursor }).map_err(OplogError::Database)
+        Ok(Oplog { cursor: try!(coll.find(None, Some(opts))) })
     }
 }
 
@@ -103,7 +114,7 @@ mod tests {
 
     #[test]
     fn operation_converts_noops() {
-        let doc = doc! {
+        let ref doc = doc! {
             "ts" => (Bson::TimeStamp(1479419535 << 32)),
             "h" => (-2135725856567446411i64),
             "v" => 2,
@@ -113,7 +124,7 @@ mod tests {
                 "msg" => "initiating set"
             }
         };
-        let operation = Operation::new(&doc).unwrap();
+        let operation = Operation::new(doc).unwrap();
 
         match operation {
             Operation::Noop { id, timestamp, document } => {
@@ -128,7 +139,7 @@ mod tests {
     #[test]
     fn operation_converts_inserts() {
         let oid = ObjectId::with_string("583050b26813716e505a5bf2").unwrap();
-        let doc = doc! {
+        let ref doc = doc! {
             "ts" => (Bson::TimeStamp(1479561394 << 32)),
             "h" => (-1742072865587022793i64),
             "v" => 2,
@@ -139,7 +150,7 @@ mod tests {
                 "foo" => "bar"
             }
         };
-        let operation = Operation::new(&doc).unwrap();
+        let operation = Operation::new(doc).unwrap();
 
         match operation {
             Operation::Insert { id, timestamp, namespace, document } => {
