@@ -6,9 +6,10 @@ use tailspin::Oplog;
 
 fn main() {
     let client = Client::connect("localhost", 27017)
-        .ok().expect("Failed to connect to MongoDB.");
+        .ok()
+        .expect("Failed to connect to MongoDB.");
 
-    if let Ok(oplog) = Oplog::new(client) {
+    if let Ok(oplog) = Oplog::new(&client) {
         for doc in oplog {
             println!("{}", doc);
         }

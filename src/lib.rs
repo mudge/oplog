@@ -5,6 +5,7 @@ extern crate chrono;
 
 use std::fmt;
 use std::result;
+use std::error;
 use mongodb::{Client, ThreadedClient};
 use mongodb::cursor::Cursor;
 use mongodb::db::ThreadedDatabase;
@@ -30,15 +31,60 @@ impl From<mongodb::Error> for Error {
     }
 }
 
+impl error::Error for Error {
+    fn description(&self) -> &str {
+        match *self {
+            Error::MissingField(ref err) => err.description(),
+            Error::Database(ref err) => err.description(),
+            Error::UnknownOperation(_) => "unknown operation type",
+        }
+    }
+}
+
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            Error::MissingField(ref err) => err.fmt(f),
+            Error::Database(ref err) => err.fmt(f),
+            Error::UnknownOperation(ref op) => write!(f, "Unknown operation type found: {}", op),
+        }
+    }
+}
+
 type Result<T> = result::Result<T, Error>;
 
 #[derive(PartialEq, Debug)]
 pub enum Operation {
-    Noop { id: i64, timestamp: DateTime<UTC>, message: String },
-    Insert { id: i64, timestamp: DateTime<UTC>, namespace: String, document: bson::Document },
-    Update { id: i64, timestamp: DateTime<UTC>, namespace: String, query: bson::Document, update: bson::Document },
-    Delete { id: i64, timestamp: DateTime<UTC>, namespace: String, query: bson::Document },
-    Command { id: i64, timestamp: DateTime<UTC>, namespace: String, command: bson::Document },
+    Noop {
+        id: i64,
+        timestamp: DateTime<UTC>,
+        message: String,
+    },
+    Insert {
+        id: i64,
+        timestamp: DateTime<UTC>,
+        namespace: String,
+        document: bson::Document,
+    },
+    Update {
+        id: i64,
+        timestamp: DateTime<UTC>,
+        namespace: String,
+        query: bson::Document,
+        update: bson::Document,
+    },
+    Delete {
+        id: i64,
+        timestamp: DateTime<UTC>,
+        namespace: String,
+        query: bson::Document,
+    },
+    Command {
+        id: i64,
+        timestamp: DateTime<UTC>,
+        namespace: String,
+        command: bson::Document,
+    },
 }
 
 impl Operation {
@@ -61,18 +107,39 @@ impl fmt::Display for Operation {
         match *self {
             Operation::Noop { id, timestamp, ref message } => {
                 write!(f, "No-op #{} at {}: {}", id, timestamp, message)
-            },
+            }
             Operation::Insert { id, timestamp, ref namespace, ref document } => {
-                write!(f, "Insert #{} into {} at {}: {}", id, namespace, timestamp, document)
-            },
+                write!(f,
+                       "Insert #{} into {} at {}: {}",
+                       id,
+                       namespace,
+                       timestamp,
+                       document)
+            }
             Operation::Update { id, timestamp, ref namespace, ref query, ref update } => {
-                write!(f, "Update #{} {} with {} at {}: {}", id, namespace, query, timestamp, update)
-            },
+                write!(f,
+                       "Update #{} {} with {} at {}: {}",
+                       id,
+                       namespace,
+                       query,
+                       timestamp,
+                       update)
+            }
             Operation::Delete { id, timestamp, ref namespace, ref query } => {
-                write!(f, "Delete #{} from {} at {}: {}", id, namespace, timestamp, query)
-            },
+                write!(f,
+                       "Delete #{} from {} at {}: {}",
+                       id,
+                       namespace,
+                       timestamp,
+                       query)
+            }
             Operation::Command { id, timestamp, ref namespace, ref command } => {
-                write!(f, "Command #{} {} at {}: {}", id, namespace, timestamp, command)
+                write!(f,
+                       "Command #{} {} at {}: {}",
+                       id,
+                       namespace,
+                       timestamp,
+                       command)
             }
         }
     }
@@ -84,7 +151,11 @@ fn noop(document: &bson::Document) -> Result<Operation> {
     let o = try!(document.get_document("o"));
     let msg = try!(o.get_str("msg"));
 
-    Ok(Operation::Noop { id: h, timestamp: timestamp_to_datetime(ts), message: msg.to_owned() })
+    Ok(Operation::Noop {
+        id: h,
+        timestamp: timestamp_to_datetime(ts),
+        message: msg.to_owned(),
+    })
 }
 
 fn insert(document: &bson::Document) -> Result<Operation> {
@@ -93,7 +164,12 @@ fn insert(document: &bson::Document) -> Result<Operation> {
     let ns = try!(document.get_str("ns"));
     let o = try!(document.get_document("o"));
 
-    Ok(Operation::Insert { id: h, timestamp: timestamp_to_datetime(ts), namespace: ns.to_owned(), document: o.to_owned() })
+    Ok(Operation::Insert {
+        id: h,
+        timestamp: timestamp_to_datetime(ts),
+        namespace: ns.to_owned(),
+        document: o.to_owned(),
+    })
 }
 
 fn update(document: &bson::Document) -> Result<Operation> {
@@ -103,7 +179,13 @@ fn update(document: &bson::Document) -> Result<Operation> {
     let o = try!(document.get_document("o"));
     let o2 = try!(document.get_document("o2"));
 
-    Ok(Operation::Update { id: h, timestamp: timestamp_to_datetime(ts), namespace: ns.to_owned(), query: o2.to_owned(), update: o.to_owned() })
+    Ok(Operation::Update {
+        id: h,
+        timestamp: timestamp_to_datetime(ts),
+        namespace: ns.to_owned(),
+        query: o2.to_owned(),
+        update: o.to_owned(),
+    })
 }
 
 fn delete(document: &bson::Document) -> Result<Operation> {
@@ -112,7 +194,12 @@ fn delete(document: &bson::Document) -> Result<Operation> {
     let ns = try!(document.get_str("ns"));
     let o = try!(document.get_document("o"));
 
-    Ok(Operation::Delete { id: h, timestamp: timestamp_to_datetime(ts), namespace: ns.to_owned(), query: o.to_owned() })
+    Ok(Operation::Delete {
+        id: h,
+        timestamp: timestamp_to_datetime(ts),
+        namespace: ns.to_owned(),
+        query: o.to_owned(),
+    })
 }
 
 fn command(document: &bson::Document) -> Result<Operation> {
@@ -121,7 +208,12 @@ fn command(document: &bson::Document) -> Result<Operation> {
     let ns = try!(document.get_str("ns"));
     let o = try!(document.get_document("o"));
 
-    Ok(Operation::Command { id: h, timestamp: timestamp_to_datetime(ts), namespace: ns.to_owned(), command: o.to_owned() })
+    Ok(Operation::Command {
+        id: h,
+        timestamp: timestamp_to_datetime(ts),
+        namespace: ns.to_owned(),
+        command: o.to_owned(),
+    })
 }
 
 fn timestamp_to_datetime(timestamp: i64) -> DateTime<UTC> {
@@ -149,14 +241,16 @@ impl Iterator for Oplog {
 }
 
 impl Oplog {
-    pub fn new(client: Client) -> Result<Oplog> {
+    pub fn new(client: &Client) -> Result<Oplog> {
         let coll = client.db("local").collection("oplog.rs");
 
         let mut opts = FindOptions::new();
         opts.cursor_type = CursorType::TailableAwait;
         opts.no_cursor_timeout = true;
 
-        Ok(Oplog { cursor: try!(coll.find(None, Some(opts))) })
+        let cursor = try!(coll.find(None, Some(opts)));
+
+        Ok(Oplog { cursor: cursor })
     }
 }
 
@@ -185,7 +279,7 @@ mod tests {
                 assert_eq!(-2135725856567446411i64, id);
                 assert_eq!(UTC.timestamp(1479419535, 0), timestamp);
                 assert_eq!("initiating set", message);
-            },
+            }
             _ => panic!("Unexpected operation"),
         }
     }
@@ -211,7 +305,7 @@ mod tests {
                 assert_eq!(UTC.timestamp(1479561394, 0), timestamp);
                 assert_eq!("foo.bar", namespace);
                 assert_eq!("bar", document.get_str("foo").expect("foo missing"));
-            },
+            }
             _ => panic!("Unexpected type of operation"),
         }
     }
@@ -240,9 +334,11 @@ mod tests {
                 assert_eq!(3511341713062188019i64, id);
                 assert_eq!(UTC.timestamp(1479561033, 0), timestamp);
                 assert_eq!("foo.bar", namespace);
-                assert_eq!(ObjectId::with_string("583033a3643431ab5be6ec35").unwrap(), query.get_object_id("_id").expect("_id missing").to_owned());
-                assert_eq!("baz", update.get_document("$set").and_then(|o| o.get_str("foo")).unwrap());
-            },
+                assert_eq!(ObjectId::with_string("583033a3643431ab5be6ec35").unwrap(),
+                           query.get_object_id("_id").expect("_id missing").to_owned());
+                assert_eq!("baz",
+                           update.get_document("$set").and_then(|o| o.get_str("foo")).unwrap());
+            }
             _ => panic!("Unexpected type of operation"),
         }
     }
@@ -266,8 +362,9 @@ mod tests {
                 assert_eq!(-5457382347563537847i64, id);
                 assert_eq!(UTC.timestamp(1479421186, 0), timestamp);
                 assert_eq!("foo.bar", namespace);
-                assert_eq!(ObjectId::with_string("582e287cfedf6fb051b2efdf").unwrap(), query.get_object_id("_id").expect("_id missing").to_owned());
-            },
+                assert_eq!(ObjectId::with_string("582e287cfedf6fb051b2efdf").unwrap(),
+                           query.get_object_id("_id").expect("_id missing").to_owned());
+            }
             _ => panic!("Unexpected type of operation"),
         }
     }
@@ -291,7 +388,7 @@ mod tests {
                 assert_eq!(UTC.timestamp(1479553955, 0), timestamp);
                 assert_eq!("test.$cmd", namespace);
                 assert_eq!("foo", command.get_str("create").expect("create missing"));
-            },
+            }
             _ => panic!("Unexpected type of operation"),
         }
     }
