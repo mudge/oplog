@@ -17,6 +17,7 @@ pub enum Error {
     MissingField(bson::ValueAccessError),
     Database(mongodb::Error),
     UnknownOperation(String),
+    InvalidOperation,
 }
 
 impl From<bson::ValueAccessError> for Error {
@@ -37,6 +38,7 @@ impl error::Error for Error {
             Error::MissingField(ref err) => err.description(),
             Error::Database(ref err) => err.description(),
             Error::UnknownOperation(_) => "unknown operation type",
+            Error::InvalidOperation => "invalid operation",
         }
     }
 }
@@ -47,6 +49,7 @@ impl fmt::Display for Error {
             Error::MissingField(ref err) => err.fmt(f),
             Error::Database(ref err) => err.fmt(f),
             Error::UnknownOperation(ref op) => write!(f, "Unknown operation type found: {}", op),
+            Error::InvalidOperation => write!(f, "Invalid operation"),
         }
     }
 }
@@ -88,18 +91,23 @@ pub enum Operation {
 }
 
 impl Operation {
-    pub fn new(document: &bson::Document) -> Result<Operation> {
-        let op = try!(document.get_str("op"));
+    pub fn new(document: bson::Document) -> Result<Operation> {
+        let op = operation(&document);
 
         match op {
-            "n" => noop(document),
-            "i" => insert(document),
-            "u" => update(document),
-            "d" => delete(document),
-            "c" => command(document),
-            _ => Err(Error::UnknownOperation(op.to_owned())),
+            Some('n') => noop(document),
+            Some('i') => insert(document),
+            Some('u') => update(document),
+            Some('d') => delete(document),
+            Some('c') => command(document),
+            Some(unknown) => Err(Error::UnknownOperation(unknown.to_string())),
+            None => Err(Error::InvalidOperation),
         }
     }
+}
+
+fn operation(document: &bson::Document) -> Option<char> {
+    document.get_str("op").ok().and_then(|op| op.chars().next())
 }
 
 impl fmt::Display for Operation {
@@ -145,7 +153,7 @@ impl fmt::Display for Operation {
     }
 }
 
-fn noop(document: &bson::Document) -> Result<Operation> {
+fn noop(document: bson::Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
     let o = try!(document.get_document("o"));
@@ -158,7 +166,7 @@ fn noop(document: &bson::Document) -> Result<Operation> {
     })
 }
 
-fn insert(document: &bson::Document) -> Result<Operation> {
+fn insert(document: bson::Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
     let ns = try!(document.get_str("ns"));
@@ -172,7 +180,7 @@ fn insert(document: &bson::Document) -> Result<Operation> {
     })
 }
 
-fn update(document: &bson::Document) -> Result<Operation> {
+fn update(document: bson::Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
     let ns = try!(document.get_str("ns"));
@@ -188,7 +196,7 @@ fn update(document: &bson::Document) -> Result<Operation> {
     })
 }
 
-fn delete(document: &bson::Document) -> Result<Operation> {
+fn delete(document: bson::Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
     let ns = try!(document.get_str("ns"));
@@ -202,7 +210,7 @@ fn delete(document: &bson::Document) -> Result<Operation> {
     })
 }
 
-fn command(document: &bson::Document) -> Result<Operation> {
+fn command(document: bson::Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
     let ns = try!(document.get_str("ns"));
@@ -233,7 +241,7 @@ impl Iterator for Oplog {
     fn next(&mut self) -> Option<Self::Item> {
         loop {
             match self.cursor.next() {
-                Some(Ok(document)) => return Operation::new(&document).ok(),
+                Some(Ok(document)) => return Operation::new(document).ok(),
                 _ => continue,
             }
         }
@@ -274,7 +282,7 @@ mod tests {
             }
         };
 
-        match Operation::new(&doc) {
+        match Operation::new(doc) {
             Ok(Operation::Noop { id, timestamp, message }) => {
                 assert_eq!(-2135725856567446411i64, id);
                 assert_eq!(UTC.timestamp(1479419535, 0), timestamp);
@@ -299,7 +307,7 @@ mod tests {
             }
         };
 
-        match Operation::new(&doc) {
+        match Operation::new(doc) {
             Ok(Operation::Insert { id, timestamp, namespace, document }) => {
                 assert_eq!(-1742072865587022793i64, id);
                 assert_eq!(UTC.timestamp(1479561394, 0), timestamp);
@@ -329,7 +337,7 @@ mod tests {
             }
         };
 
-        match Operation::new(&doc) {
+        match Operation::new(doc) {
             Ok(Operation::Update { id, timestamp, namespace, query, update }) => {
                 assert_eq!(3511341713062188019i64, id);
                 assert_eq!(UTC.timestamp(1479561033, 0), timestamp);
@@ -357,7 +365,7 @@ mod tests {
             }
         };
 
-        match Operation::new(&doc) {
+        match Operation::new(doc) {
             Ok(Operation::Delete { id, timestamp, namespace, query }) => {
                 assert_eq!(-5457382347563537847i64, id);
                 assert_eq!(UTC.timestamp(1479421186, 0), timestamp);
@@ -382,7 +390,7 @@ mod tests {
             }
         };
 
-        match Operation::new(&doc) {
+        match Operation::new(doc) {
             Ok(Operation::Command { id, timestamp, namespace, command }) => {
                 assert_eq!(-7222343681970774929i64, id);
                 assert_eq!(UTC.timestamp(1479553955, 0), timestamp);
