@@ -13,8 +13,10 @@ pub use oplog::Oplog;
 mod operation;
 mod oplog;
 
+/// Result is a type alias which fixes the type of the error to the `Error` type defined below.
 pub type Result<T> = result::Result<T, Error>;
 
+/// Error enumerates the list of possible error conditions when tailing an oplog.
 #[derive(Debug)]
 pub enum Error {
     MissingField(bson::ValueAccessError),

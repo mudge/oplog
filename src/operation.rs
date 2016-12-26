@@ -5,19 +5,23 @@ use chrono::{DateTime, UTC, TimeZone};
 use Error;
 use Result;
 
-#[derive(PartialEq, Debug)]
+/// A MongoDB oplog operation.
+#[derive(Clone, Debug, PartialEq)]
 pub enum Operation {
+    /// A no-op as inserted periodically by MongoDB.
     Noop {
         id: i64,
         timestamp: DateTime<UTC>,
         message: String,
     },
+    /// An insert of a document into a collection.
     Insert {
         id: i64,
         timestamp: DateTime<UTC>,
         namespace: String,
         document: bson::Document,
     },
+    /// An update of a document matching a given query.
     Update {
         id: i64,
         timestamp: DateTime<UTC>,
@@ -25,12 +29,14 @@ pub enum Operation {
         query: bson::Document,
         update: bson::Document,
     },
+    /// The deletion of a document matching a given query.
     Delete {
         id: i64,
         timestamp: DateTime<UTC>,
         namespace: String,
         query: bson::Document,
     },
+    /// A command such as the creation of a new collection.
     Command {
         id: i64,
         timestamp: DateTime<UTC>,
@@ -40,6 +46,7 @@ pub enum Operation {
 }
 
 impl Operation {
+    /// Try to create a new Operation from a BSON document.
     pub fn new(document: bson::Document) -> Result<Operation> {
         let op = operation(&document);
 
@@ -98,10 +105,12 @@ impl fmt::Display for Operation {
     }
 }
 
+/// Returns the operation type for a given document.
 fn operation(document: &bson::Document) -> Option<char> {
     document.get_str("op").ok().and_then(|op| op.chars().next())
 }
 
+/// Returns a no-op operation for a given document.
 fn noop(document: bson::Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
@@ -115,6 +124,7 @@ fn noop(document: bson::Document) -> Result<Operation> {
     })
 }
 
+/// Return an insert operation for a given document.
 fn insert(document: bson::Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
@@ -129,6 +139,7 @@ fn insert(document: bson::Document) -> Result<Operation> {
     })
 }
 
+/// Return an update operation for a given document.
 fn update(document: bson::Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
@@ -145,6 +156,7 @@ fn update(document: bson::Document) -> Result<Operation> {
     })
 }
 
+/// Return a delete operation for a given document.
 fn delete(document: bson::Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
@@ -159,6 +171,7 @@ fn delete(document: bson::Document) -> Result<Operation> {
     })
 }
 
+/// Return a command operation for a given document.
 fn command(document: bson::Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
@@ -173,6 +186,7 @@ fn command(document: bson::Document) -> Result<Operation> {
     })
 }
 
+/// Convert a BSON timestamp into a UTC DateTime.
 fn timestamp_to_datetime(timestamp: i64) -> DateTime<UTC> {
     let seconds = timestamp >> 32;
     let nanoseconds = ((timestamp & 0xFFFFFFFF) * 1000000) as u32;
@@ -182,11 +196,12 @@ fn timestamp_to_datetime(timestamp: i64) -> DateTime<UTC> {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use Error;
     use bson::Bson;
     use bson::oid::ObjectId;
     use chrono::{UTC, TimeZone};
+
+    use super::Operation;
 
     #[test]
     fn operation_converts_noops() {

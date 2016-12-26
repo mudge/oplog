@@ -6,6 +6,7 @@ use mongodb::{Client, ThreadedClient};
 use Operation;
 use Result;
 
+/// An iterable oplog.
 pub struct Oplog {
     cursor: Cursor,
 }
