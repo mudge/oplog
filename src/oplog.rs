@@ -2,7 +2,9 @@ use mongodb::coll::options::{FindOptions, CursorType};
 use mongodb::cursor::Cursor;
 use mongodb::db::ThreadedDatabase;
 use mongodb::{Client, ThreadedClient};
-use operation::{Operation, Error};
+
+use Operation;
+use Result;
 
 pub struct Oplog {
     cursor: Cursor,
@@ -22,7 +24,7 @@ impl Iterator for Oplog {
 }
 
 impl Oplog {
-    pub fn new(client: &Client) -> Result<Oplog, Error> {
+    pub fn new(client: &Client) -> Result<Oplog> {
         let coll = client.db("local").collection("oplog.rs");
 
         let mut opts = FindOptions::new();

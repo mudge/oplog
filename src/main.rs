@@ -2,7 +2,7 @@ extern crate tailspin;
 extern crate mongodb;
 
 use mongodb::{Client, ThreadedClient};
-use tailspin::oplog::Oplog;
+use tailspin::Oplog;
 
 fn main() {
     let client = Client::connect("localhost", 27017).expect("Failed to connect to MongoDB.");

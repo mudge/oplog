@@ -1,54 +1,9 @@
-use mongodb;
-use bson;
-
 use std::fmt;
-use std::result;
-use std::error;
+
+use bson;
 use chrono::{DateTime, UTC, TimeZone};
-
-#[derive(Debug)]
-pub enum Error {
-    MissingField(bson::ValueAccessError),
-    Database(mongodb::Error),
-    UnknownOperation(String),
-    InvalidOperation,
-}
-
-impl From<bson::ValueAccessError> for Error {
-    fn from(original: bson::ValueAccessError) -> Error {
-        Error::MissingField(original)
-    }
-}
-
-impl From<mongodb::Error> for Error {
-    fn from(original: mongodb::Error) -> Error {
-        Error::Database(original)
-    }
-}
-
-impl error::Error for Error {
-    fn description(&self) -> &str {
-        match *self {
-            Error::MissingField(ref err) => err.description(),
-            Error::Database(ref err) => err.description(),
-            Error::UnknownOperation(_) => "unknown operation type",
-            Error::InvalidOperation => "invalid operation",
-        }
-    }
-}
-
-impl fmt::Display for Error {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match *self {
-            Error::MissingField(ref err) => err.fmt(f),
-            Error::Database(ref err) => err.fmt(f),
-            Error::UnknownOperation(ref op) => write!(f, "Unknown operation type found: {}", op),
-            Error::InvalidOperation => write!(f, "Invalid operation"),
-        }
-    }
-}
-
-type Result<T> = result::Result<T, Error>;
+use Error;
+use Result;
 
 #[derive(PartialEq, Debug)]
 pub enum Operation {
@@ -100,10 +55,6 @@ impl Operation {
     }
 }
 
-fn operation(document: &bson::Document) -> Option<char> {
-    document.get_str("op").ok().and_then(|op| op.chars().next())
-}
-
 impl fmt::Display for Operation {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
@@ -145,6 +96,10 @@ impl fmt::Display for Operation {
             }
         }
     }
+}
+
+fn operation(document: &bson::Document) -> Option<char> {
+    document.get_str("op").ok().and_then(|op| op.chars().next())
 }
 
 fn noop(document: bson::Document) -> Result<Operation> {
@@ -228,6 +183,7 @@ fn timestamp_to_datetime(timestamp: i64) -> DateTime<UTC> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use Error;
     use bson::Bson;
     use bson::oid::ObjectId;
     use chrono::{UTC, TimeZone};
@@ -361,6 +317,26 @@ mod tests {
                 assert_eq!("foo", command.get_str("create").expect("create missing"));
             }
             _ => panic!("Unexpected type of operation"),
+        }
+    }
+
+    #[test]
+    fn operation_returns_unknown_operations() {
+        let doc = doc! { "op" => "x" };
+
+        match Operation::new(doc) {
+            Err(Error::UnknownOperation(op)) => assert_eq!("x", op),
+            _ => panic!("Expected unknown operation, got something else"),
+        }
+    }
+
+    #[test]
+    fn operation_returns_invalid_operations() {
+        let doc = doc! { "foo" => "bar" };
+
+        match Operation::new(doc) {
+            Err(Error::InvalidOperation) => {},
+            _ => panic!("Expected invalid operation, got something else"),
         }
     }
 }
