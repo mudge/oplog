@@ -3,6 +3,10 @@ name = "tailspin"
 version = "0.1.0"
 authors = ["Paul Mucur <mudge@mudge.name>"]
 
+[[bin]]
+name = "main"
+doc = false
+
 [dependencies]
 bson = "^0.3.0"
 mongodb = "^0.1.8"
