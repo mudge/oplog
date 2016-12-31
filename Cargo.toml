@@ -2,6 +2,9 @@
 name = "tailspin"
 version = "0.1.0"
 authors = ["Paul Mucur <mudge@mudge.name>"]
+repository = "https://github.com/mudge/tailspin"
+readme = "README.md"
+license = "MIT"
 
 [[bin]]
 name = "main"

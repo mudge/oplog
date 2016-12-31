@@ -10,7 +10,7 @@ use std::fmt;
 use std::result;
 
 pub use operation::Operation;
-pub use oplog::Oplog;
+pub use oplog::{Oplog, OplogBuilder};
 
 mod operation;
 mod oplog;

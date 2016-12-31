@@ -6,7 +6,7 @@
 
 use std::fmt;
 
-use bson;
+use bson::Document;
 use chrono::{DateTime, UTC, TimeZone};
 use {Error, Result};
 
@@ -31,7 +31,7 @@ pub enum Operation {
         /// The full namespace of the operation including its database and collection.
         namespace: String,
         /// The BSON document inserted into the namespace.
-        document: bson::Document,
+        document: Document,
     },
     /// An update of a document in a specific database and collection matching a given query.
     Update {
@@ -42,9 +42,9 @@ pub enum Operation {
         /// The full namespace of the operation including its database and collection.
         namespace: String,
         /// The BSON selection criteria for the update.
-        query: bson::Document,
+        query: Document,
         /// The BSON update applied in this operation.
-        update: bson::Document,
+        update: Document,
     },
     /// The deletion of a document in a specific database and collection matching a given query.
     Delete {
@@ -55,7 +55,7 @@ pub enum Operation {
         /// The full namespace of the operation including its database and collection.
         namespace: String,
         /// The BSON selection criteria for the delete.
-        query: bson::Document,
+        query: Document,
     },
     /// A command such as the creation or deletion of a collection.
     Command {
@@ -66,13 +66,13 @@ pub enum Operation {
         /// The full namespace of the operation including its database and collection.
         namespace: String,
         /// The BSON command.
-        command: bson::Document,
+        command: Document,
     },
 }
 
 impl Operation {
     /// Try to create a new Operation from a BSON document.
-    pub fn new(document: bson::Document) -> Result<Operation> {
+    pub fn new(document: Document) -> Result<Operation> {
         let op = operation(&document);
 
         match op {
@@ -131,12 +131,12 @@ impl fmt::Display for Operation {
 }
 
 /// Returns the operation type for a given document.
-fn operation(document: &bson::Document) -> Option<char> {
+fn operation(document: &Document) -> Option<char> {
     document.get_str("op").ok().and_then(|op| op.chars().next())
 }
 
 /// Returns a no-op operation for a given document.
-fn noop(document: bson::Document) -> Result<Operation> {
+fn noop(document: Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
     let o = try!(document.get_document("o"));
@@ -150,7 +150,7 @@ fn noop(document: bson::Document) -> Result<Operation> {
 }
 
 /// Return an insert operation for a given document.
-fn insert(document: bson::Document) -> Result<Operation> {
+fn insert(document: Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
     let ns = try!(document.get_str("ns"));
@@ -165,7 +165,7 @@ fn insert(document: bson::Document) -> Result<Operation> {
 }
 
 /// Return an update operation for a given document.
-fn update(document: bson::Document) -> Result<Operation> {
+fn update(document: Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
     let ns = try!(document.get_str("ns"));
@@ -182,7 +182,7 @@ fn update(document: bson::Document) -> Result<Operation> {
 }
 
 /// Return a delete operation for a given document.
-fn delete(document: bson::Document) -> Result<Operation> {
+fn delete(document: Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
     let ns = try!(document.get_str("ns"));
@@ -197,7 +197,7 @@ fn delete(document: bson::Document) -> Result<Operation> {
 }
 
 /// Return a command operation for a given document.
-fn command(document: bson::Document) -> Result<Operation> {
+fn command(document: Document) -> Result<Operation> {
     let h = try!(document.get_i64("h"));
     let ts = try!(document.get_time_stamp("ts"));
     let ns = try!(document.get_str("ns"));
