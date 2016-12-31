@@ -3,11 +3,11 @@ use mongodb::cursor::Cursor;
 use mongodb::db::ThreadedDatabase;
 use mongodb::{Client, ThreadedClient};
 
-use Operation;
-use Result;
+use {Operation, Result};
 
 /// An iterable oplog.
 pub struct Oplog {
+    /// The internal MongoDB cursor for the current position in the oplog.
     cursor: Cursor,
 }
 

@@ -1,46 +1,71 @@
+//! The operation module is responsible for converting MongoDB BSON documents into specific
+//! `Operation` types, one for each type of document stored in the MongoDB oplog. As much as
+//! possible, we convert BSON types into more typical Rust types (e.g. BSON timestamps into UTC
+//! datetimes). As we accept _any_ document, it may not be a valid operation so wrap any failed
+//! conversions in a `Result`.
+
 use std::fmt;
 
 use bson;
 use chrono::{DateTime, UTC, TimeZone};
-use Error;
-use Result;
+use {Error, Result};
 
 /// A MongoDB oplog operation.
 #[derive(Clone, Debug, PartialEq)]
 pub enum Operation {
-    /// A no-op as inserted periodically by MongoDB.
+    /// A no-op as inserted periodically by MongoDB or used to initiate new replica sets.
     Noop {
+        /// A unique identifier for this operation.
         id: i64,
+        /// The time of the operation.
         timestamp: DateTime<UTC>,
+        /// The message associated with this operation.
         message: String,
     },
-    /// An insert of a document into a collection.
+    /// An insert of a document into a specific database and collection.
     Insert {
+        /// A unique identifier for this operation.
         id: i64,
+        /// The time of the operation.
         timestamp: DateTime<UTC>,
+        /// The full namespace of the operation including its database and collection.
         namespace: String,
+        /// The BSON document inserted into the namespace.
         document: bson::Document,
     },
-    /// An update of a document matching a given query.
+    /// An update of a document in a specific database and collection matching a given query.
     Update {
+        /// A unique identifier for this operation.
         id: i64,
+        /// The time of the operation.
         timestamp: DateTime<UTC>,
+        /// The full namespace of the operation including its database and collection.
         namespace: String,
+        /// The BSON selection criteria for the update.
         query: bson::Document,
+        /// The BSON update applied in this operation.
         update: bson::Document,
     },
-    /// The deletion of a document matching a given query.
+    /// The deletion of a document in a specific database and collection matching a given query.
     Delete {
+        /// A unique identifier for this operation.
         id: i64,
+        /// The time of the operation.
         timestamp: DateTime<UTC>,
+        /// The full namespace of the operation including its database and collection.
         namespace: String,
+        /// The BSON selection criteria for the delete.
         query: bson::Document,
     },
-    /// A command such as the creation of a new collection.
+    /// A command such as the creation or deletion of a collection.
     Command {
+        /// A unique identifier for this operation.
         id: i64,
+        /// The time of the operation.
         timestamp: DateTime<UTC>,
+        /// The full namespace of the operation including its database and collection.
         namespace: String,
+        /// The BSON command.
         command: bson::Document,
     },
 }
