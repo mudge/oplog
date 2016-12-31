@@ -137,10 +137,10 @@ fn operation(document: &Document) -> Option<char> {
 
 /// Returns a no-op operation for a given document.
 fn noop(document: Document) -> Result<Operation> {
-    let h = try!(document.get_i64("h"));
-    let ts = try!(document.get_time_stamp("ts"));
-    let o = try!(document.get_document("o"));
-    let msg = try!(o.get_str("msg"));
+    let h = document.get_i64("h")?;
+    let ts = document.get_time_stamp("ts")?;
+    let o = document.get_document("o")?;
+    let msg = o.get_str("msg")?;
 
     Ok(Operation::Noop {
         id: h,
@@ -151,10 +151,10 @@ fn noop(document: Document) -> Result<Operation> {
 
 /// Return an insert operation for a given document.
 fn insert(document: Document) -> Result<Operation> {
-    let h = try!(document.get_i64("h"));
-    let ts = try!(document.get_time_stamp("ts"));
-    let ns = try!(document.get_str("ns"));
-    let o = try!(document.get_document("o"));
+    let h = document.get_i64("h")?;
+    let ts = document.get_time_stamp("ts")?;
+    let ns = document.get_str("ns")?;
+    let o = document.get_document("o")?;
 
     Ok(Operation::Insert {
         id: h,
@@ -166,11 +166,11 @@ fn insert(document: Document) -> Result<Operation> {
 
 /// Return an update operation for a given document.
 fn update(document: Document) -> Result<Operation> {
-    let h = try!(document.get_i64("h"));
-    let ts = try!(document.get_time_stamp("ts"));
-    let ns = try!(document.get_str("ns"));
-    let o = try!(document.get_document("o"));
-    let o2 = try!(document.get_document("o2"));
+    let h = document.get_i64("h")?;
+    let ts = document.get_time_stamp("ts")?;
+    let ns = document.get_str("ns")?;
+    let o = document.get_document("o")?;
+    let o2 = document.get_document("o2")?;
 
     Ok(Operation::Update {
         id: h,
@@ -183,10 +183,10 @@ fn update(document: Document) -> Result<Operation> {
 
 /// Return a delete operation for a given document.
 fn delete(document: Document) -> Result<Operation> {
-    let h = try!(document.get_i64("h"));
-    let ts = try!(document.get_time_stamp("ts"));
-    let ns = try!(document.get_str("ns"));
-    let o = try!(document.get_document("o"));
+    let h = document.get_i64("h")?;
+    let ts = document.get_time_stamp("ts")?;
+    let ns = document.get_str("ns")?;
+    let o = document.get_document("o")?;
 
     Ok(Operation::Delete {
         id: h,
@@ -198,10 +198,10 @@ fn delete(document: Document) -> Result<Operation> {
 
 /// Return a command operation for a given document.
 fn command(document: Document) -> Result<Operation> {
-    let h = try!(document.get_i64("h"));
-    let ts = try!(document.get_time_stamp("ts"));
-    let ns = try!(document.get_str("ns"));
-    let o = try!(document.get_document("o"));
+    let h = document.get_i64("h")?;
+    let ts = document.get_time_stamp("ts")?;
+    let ns = document.get_str("ns")?;
+    let o = document.get_document("o")?;
 
     Ok(Operation::Command {
         id: h,

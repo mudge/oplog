@@ -1,3 +1,6 @@
+//! The oplog module is responsible for building an iterator over a MongoDB replica set oplog with
+//! any optional filtering criteria applied.
+
 use bson::Document;
 use mongodb::coll::options::{FindOptions, CursorType};
 use mongodb::cursor::Cursor;
@@ -67,7 +70,7 @@ impl<'a> OplogBuilder<'a> {
         opts.cursor_type = CursorType::TailableAwait;
         opts.no_cursor_timeout = true;
 
-        let cursor = try!(coll.find(self.filter.clone(), Some(opts)));
+        let cursor = coll.find(self.filter.clone(), Some(opts))?;
 
         Ok(Oplog { cursor: cursor })
     }
