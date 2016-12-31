@@ -5,11 +5,13 @@ by implementing a library that tails a [MongoDB
 oplog](https://docs.mongodb.com/v3.0/core/replica-set-oplog/).
 
 ```rust
+#[macro_use]
+extern crate bson;
 extern crate tailspin;
 extern crate mongodb;
 
 use mongodb::{Client, ThreadedClient};
-use tailspin::Oplog;
+use tailspin::{Oplog, OplogBuilder};
 
 fn main() {
     let client = Client::connect("localhost", 27017).expect("Failed to connect to MongoDB.");
@@ -17,6 +19,14 @@ fn main() {
     if let Ok(oplog) = Oplog::new(&client) {
         for doc in oplog {
             println!("{}", doc);
+        }
+    }
+
+    // Or, if you want to filter out certain operations:
+
+    if let Ok(oplog) = OplogBuilder::new(&client).filter(Some(doc! { "op" => "i" })).build() {
+        for insert in oplog {
+            println!("{}", insert);
         }
     }
 }
