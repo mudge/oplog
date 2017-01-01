@@ -1,8 +1,10 @@
 //! The operation module is responsible for converting MongoDB BSON documents into specific
 //! `Operation` types, one for each type of document stored in the MongoDB oplog. As much as
 //! possible, we convert BSON types into more typical Rust types (e.g. BSON timestamps into UTC
-//! datetimes). As we accept _any_ document, it may not be a valid operation so wrap any failed
-//! conversions in a `Result`.
+//! datetimes).
+//!
+//! As we accept _any_ document, it may not be a valid operation so wrap any conversions in a
+//! `Result`.
 
 use std::fmt;
 
@@ -73,17 +75,93 @@ pub enum Operation {
 impl Operation {
     /// Try to create a new Operation from a BSON document.
     pub fn new(document: Document) -> Result<Operation> {
-        let op = operation(&document);
+        let op = operation_type(&document);
 
         match op {
-            Some('n') => noop(document),
-            Some('i') => insert(document),
-            Some('u') => update(document),
-            Some('d') => delete(document),
-            Some('c') => command(document),
+            Some('n') => Operation::from_noop(document),
+            Some('i') => Operation::from_insert(document),
+            Some('u') => Operation::from_update(document),
+            Some('d') => Operation::from_delete(document),
+            Some('c') => Operation::from_command(document),
             Some(unknown) => Err(Error::UnknownOperation(unknown.to_string())),
             None => Err(Error::InvalidOperation),
         }
+    }
+
+    /// Returns a no-op operation for a given document.
+    fn from_noop(document: Document) -> Result<Operation> {
+        let h = document.get_i64("h")?;
+        let ts = document.get_time_stamp("ts")?;
+        let o = document.get_document("o")?;
+        let msg = o.get_str("msg")?;
+
+        Ok(Operation::Noop {
+            id: h,
+            timestamp: timestamp_to_datetime(ts),
+            message: msg.into(),
+        })
+    }
+
+    /// Return an insert operation for a given document.
+    fn from_insert(document: Document) -> Result<Operation> {
+        let h = document.get_i64("h")?;
+        let ts = document.get_time_stamp("ts")?;
+        let ns = document.get_str("ns")?;
+        let o = document.get_document("o")?;
+
+        Ok(Operation::Insert {
+            id: h,
+            timestamp: timestamp_to_datetime(ts),
+            namespace: ns.into(),
+            document: o.to_owned(),
+        })
+    }
+
+    /// Return an update operation for a given document.
+    fn from_update(document: Document) -> Result<Operation> {
+        let h = document.get_i64("h")?;
+        let ts = document.get_time_stamp("ts")?;
+        let ns = document.get_str("ns")?;
+        let o = document.get_document("o")?;
+        let o2 = document.get_document("o2")?;
+
+        Ok(Operation::Update {
+            id: h,
+            timestamp: timestamp_to_datetime(ts),
+            namespace: ns.into(),
+            query: o2.to_owned(),
+            update: o.to_owned(),
+        })
+    }
+
+    /// Return a delete operation for a given document.
+    fn from_delete(document: Document) -> Result<Operation> {
+        let h = document.get_i64("h")?;
+        let ts = document.get_time_stamp("ts")?;
+        let ns = document.get_str("ns")?;
+        let o = document.get_document("o")?;
+
+        Ok(Operation::Delete {
+            id: h,
+            timestamp: timestamp_to_datetime(ts),
+            namespace: ns.into(),
+            query: o.to_owned(),
+        })
+    }
+
+    /// Return a command operation for a given document.
+    fn from_command(document: Document) -> Result<Operation> {
+        let h = document.get_i64("h")?;
+        let ts = document.get_time_stamp("ts")?;
+        let ns = document.get_str("ns")?;
+        let o = document.get_document("o")?;
+
+        Ok(Operation::Command {
+            id: h,
+            timestamp: timestamp_to_datetime(ts),
+            namespace: ns.into(),
+            command: o.to_owned(),
+        })
     }
 }
 
@@ -130,85 +208,9 @@ impl fmt::Display for Operation {
     }
 }
 
-/// Returns the operation type for a given document.
-fn operation(document: &Document) -> Option<char> {
+/// Return the operation type for a given document.
+fn operation_type(document: &Document) -> Option<char> {
     document.get_str("op").ok().and_then(|op| op.chars().next())
-}
-
-/// Returns a no-op operation for a given document.
-fn noop(document: Document) -> Result<Operation> {
-    let h = document.get_i64("h")?;
-    let ts = document.get_time_stamp("ts")?;
-    let o = document.get_document("o")?;
-    let msg = o.get_str("msg")?;
-
-    Ok(Operation::Noop {
-        id: h,
-        timestamp: timestamp_to_datetime(ts),
-        message: msg.to_owned(),
-    })
-}
-
-/// Return an insert operation for a given document.
-fn insert(document: Document) -> Result<Operation> {
-    let h = document.get_i64("h")?;
-    let ts = document.get_time_stamp("ts")?;
-    let ns = document.get_str("ns")?;
-    let o = document.get_document("o")?;
-
-    Ok(Operation::Insert {
-        id: h,
-        timestamp: timestamp_to_datetime(ts),
-        namespace: ns.to_owned(),
-        document: o.to_owned(),
-    })
-}
-
-/// Return an update operation for a given document.
-fn update(document: Document) -> Result<Operation> {
-    let h = document.get_i64("h")?;
-    let ts = document.get_time_stamp("ts")?;
-    let ns = document.get_str("ns")?;
-    let o = document.get_document("o")?;
-    let o2 = document.get_document("o2")?;
-
-    Ok(Operation::Update {
-        id: h,
-        timestamp: timestamp_to_datetime(ts),
-        namespace: ns.to_owned(),
-        query: o2.to_owned(),
-        update: o.to_owned(),
-    })
-}
-
-/// Return a delete operation for a given document.
-fn delete(document: Document) -> Result<Operation> {
-    let h = document.get_i64("h")?;
-    let ts = document.get_time_stamp("ts")?;
-    let ns = document.get_str("ns")?;
-    let o = document.get_document("o")?;
-
-    Ok(Operation::Delete {
-        id: h,
-        timestamp: timestamp_to_datetime(ts),
-        namespace: ns.to_owned(),
-        query: o.to_owned(),
-    })
-}
-
-/// Return a command operation for a given document.
-fn command(document: Document) -> Result<Operation> {
-    let h = document.get_i64("h")?;
-    let ts = document.get_time_stamp("ts")?;
-    let ns = document.get_str("ns")?;
-    let o = document.get_document("o")?;
-
-    Ok(Operation::Command {
-        id: h,
-        timestamp: timestamp_to_datetime(ts),
-        namespace: ns.to_owned(),
-        command: o.to_owned(),
-    })
 }
 
 /// Convert a BSON timestamp into a UTC DateTime.
@@ -223,9 +225,7 @@ fn timestamp_to_datetime(timestamp: i64) -> DateTime<UTC> {
 mod tests {
     use Error;
     use bson::Bson;
-    use bson::oid::ObjectId;
     use chrono::{UTC, TimeZone};
-
     use super::Operation;
 
     #[test]
@@ -240,20 +240,20 @@ mod tests {
                 "msg" => "initiating set"
             }
         };
+        let operation = Operation::new(doc).unwrap();
 
-        match Operation::new(doc) {
-            Ok(Operation::Noop { id, timestamp, message }) => {
-                assert_eq!(-2135725856567446411i64, id);
-                assert_eq!(UTC.timestamp(1479419535, 0), timestamp);
-                assert_eq!("initiating set", message);
+        assert_eq!(
+            operation,
+            Operation::Noop {
+                 id: -2135725856567446411i64,
+                 timestamp: UTC.timestamp(1479419535, 0),
+                 message: "initiating set".into()
             }
-            _ => panic!("Unexpected operation"),
-        }
+        );
     }
 
     #[test]
     fn operation_converts_inserts() {
-        let oid = ObjectId::with_string("583050b26813716e505a5bf2").unwrap();
         let doc = doc! {
             "ts" => (Bson::TimeStamp(1479561394 << 32)),
             "h" => (-1742072865587022793i64),
@@ -261,25 +261,24 @@ mod tests {
             "op" => "i",
             "ns" => "foo.bar",
             "o" => {
-                "_id" => (Bson::ObjectId(oid)),
                 "foo" => "bar"
             }
         };
+        let operation = Operation::new(doc).unwrap();
 
-        match Operation::new(doc) {
-            Ok(Operation::Insert { id, timestamp, namespace, document }) => {
-                assert_eq!(-1742072865587022793i64, id);
-                assert_eq!(UTC.timestamp(1479561394, 0), timestamp);
-                assert_eq!("foo.bar", namespace);
-                assert_eq!("bar", document.get_str("foo").expect("foo missing"));
+        assert_eq!(
+            operation,
+            Operation::Insert {
+                id: -1742072865587022793i64,
+                timestamp: UTC.timestamp(1479561394, 0),
+                namespace: "foo.bar".into(),
+                document: doc! { "foo" => "bar" },
             }
-            _ => panic!("Unexpected type of operation"),
-        }
+        );
     }
 
     #[test]
     fn operation_converts_updates() {
-        let oid = ObjectId::with_string("583033a3643431ab5be6ec35").unwrap();
         let doc = doc! {
             "ts" => (Bson::TimeStamp(1479561033 << 32)),
             "h" => (3511341713062188019i64),
@@ -287,7 +286,7 @@ mod tests {
             "op" => "u",
             "ns" => "foo.bar",
             "o2" => {
-                "_id" => (Bson::ObjectId(oid))
+                "_id" => 1
             },
             "o" => {
                 "$set" => {
@@ -295,24 +294,22 @@ mod tests {
                 }
             }
         };
+        let operation = Operation::new(doc).unwrap();
 
-        match Operation::new(doc) {
-            Ok(Operation::Update { id, timestamp, namespace, query, update }) => {
-                assert_eq!(3511341713062188019i64, id);
-                assert_eq!(UTC.timestamp(1479561033, 0), timestamp);
-                assert_eq!("foo.bar", namespace);
-                assert_eq!(ObjectId::with_string("583033a3643431ab5be6ec35").unwrap(),
-                           query.get_object_id("_id").expect("_id missing").to_owned());
-                assert_eq!("baz",
-                           update.get_document("$set").and_then(|o| o.get_str("foo")).unwrap());
+        assert_eq!(
+            operation,
+            Operation::Update {
+                id: 3511341713062188019i64,
+                timestamp: UTC.timestamp(1479561033, 0),
+                namespace: "foo.bar".into(),
+                query: doc! { "_id" => 1 },
+                update: doc! { "$set" => { "foo" => "baz" } },
             }
-            _ => panic!("Unexpected type of operation"),
-        }
+        );
     }
 
     #[test]
     fn operation_converts_deletes() {
-        let oid = ObjectId::with_string("582e287cfedf6fb051b2efdf").unwrap();
         let doc = doc! {
             "ts" => (Bson::TimeStamp(1479421186 << 32)),
             "h" => (-5457382347563537847i64),
@@ -320,20 +317,20 @@ mod tests {
             "op" => "d",
             "ns" => "foo.bar",
             "o" => {
-                "_id" => (Bson::ObjectId(oid))
+                "_id" => 1
             }
         };
+        let operation = Operation::new(doc).unwrap();
 
-        match Operation::new(doc) {
-            Ok(Operation::Delete { id, timestamp, namespace, query }) => {
-                assert_eq!(-5457382347563537847i64, id);
-                assert_eq!(UTC.timestamp(1479421186, 0), timestamp);
-                assert_eq!("foo.bar", namespace);
-                assert_eq!(ObjectId::with_string("582e287cfedf6fb051b2efdf").unwrap(),
-                           query.get_object_id("_id").expect("_id missing").to_owned());
+        assert_eq!(
+            operation,
+            Operation::Delete {
+                id: -5457382347563537847i64,
+                timestamp: UTC.timestamp(1479421186, 0),
+                namespace: "foo.bar".into(),
+                query: doc! { "_id" => 1 },
             }
-            _ => panic!("Unexpected type of operation"),
-        }
+        );
     }
 
     #[test]
@@ -348,35 +345,38 @@ mod tests {
                 "create" => "foo"
             }
         };
+        let operation = Operation::new(doc).unwrap();
 
-        match Operation::new(doc) {
-            Ok(Operation::Command { id, timestamp, namespace, command }) => {
-                assert_eq!(-7222343681970774929i64, id);
-                assert_eq!(UTC.timestamp(1479553955, 0), timestamp);
-                assert_eq!("test.$cmd", namespace);
-                assert_eq!("foo", command.get_str("create").expect("create missing"));
+        assert_eq!(
+            operation,
+            Operation::Command {
+                id: -7222343681970774929i64,
+                timestamp: UTC.timestamp(1479553955, 0),
+                namespace: "test.$cmd".into(),
+                command: doc! { "create" => "foo" },
             }
-            _ => panic!("Unexpected type of operation"),
-        }
+        );
     }
 
     #[test]
     fn operation_returns_unknown_operations() {
         let doc = doc! { "op" => "x" };
+        let err = Operation::new(doc).unwrap_err();
 
-        match Operation::new(doc) {
-            Err(Error::UnknownOperation(op)) => assert_eq!("x", op),
-            _ => panic!("Expected unknown operation, got something else"),
+        match err {
+            Error::UnknownOperation(op) => assert_eq!(op, "x"),
+            _ => panic!("Expected unknown operation."),
         }
     }
 
     #[test]
     fn operation_returns_invalid_operations() {
         let doc = doc! { "foo" => "bar" };
+        let err = Operation::new(doc).unwrap_err();
 
-        match Operation::new(doc) {
-            Err(Error::InvalidOperation) => {},
-            _ => panic!("Expected invalid operation, got something else"),
+        match err {
+            Error::InvalidOperation => {},
+            _ => panic!("Expected invalid operation."),
         }
     }
 }

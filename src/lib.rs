@@ -15,13 +15,13 @@ pub use oplog::{Oplog, OplogBuilder};
 mod operation;
 mod oplog;
 
-/// Result is a type alias for convenience so we can fix the error to our own `Error` type below.
+/// A type alias for convenience so we can fix the error to our own `Error` type.
 pub type Result<T> = result::Result<T, Error>;
 
 /// Error enumerates the list of possible error conditions when tailing an oplog.
 #[derive(Debug)]
 pub enum Error {
-    /// A database connectivity error.
+    /// A database connectivity error raised by the MongoDB driver.
     Database(mongodb::Error),
     /// An error when converting a BSON document to an `Operation` and it does not have an
     /// operation type at all.
@@ -29,7 +29,7 @@ pub enum Error {
     /// An error when converting a BSON document to an `Operation` and it has a missing field or
     /// unexpected type.
     MissingField(bson::ValueAccessError),
-    /// An error when converting a BSON document to an `Operation` and it has an unhandled
+    /// An error when converting a BSON document to an `Operation` and it has an unsupported
     /// operation type.
     UnknownOperation(String),
 }

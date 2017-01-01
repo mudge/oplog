@@ -1,17 +1,18 @@
-# Tailspin [![Build Status](https://travis-ci.org/mudge/tailspin.svg?branch=master)](https://travis-ci.org/mudge/tailspin)
+# Oplog [![Build Status](https://travis-ci.org/mudge/oplog.svg?branch=master)](https://travis-ci.org/mudge/oplog)
 
 This is an in-progress exercise in learning [Rust](https://www.rust-lang.org/)
 by implementing a library that tails a [MongoDB
-oplog](https://docs.mongodb.com/v3.0/core/replica-set-oplog/).
+oplog](https://docs.mongodb.com/v3.0/core/replica-set-oplog/), exposing it as
+an [`Iterator`](https://doc.rust-lang.org/1.14.0/std/iter/index.html).
 
 ```rust
 #[macro_use]
 extern crate bson;
-extern crate tailspin;
 extern crate mongodb;
+extern crate oplog;
 
 use mongodb::{Client, ThreadedClient};
-use tailspin::{Oplog, OplogBuilder};
+use oplog::{Oplog, OplogBuilder};
 
 fn main() {
     let client = Client::connect("localhost", 27017).expect("Failed to connect to MongoDB.");

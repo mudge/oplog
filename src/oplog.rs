@@ -11,9 +11,9 @@ use {Operation, Result};
 
 /// Oplog represents a MongoDB replica set oplog.
 ///
-/// It implements the Iterator trait so can be iterated over, yielding successive `Operation` enums
-/// as they are read from the server. This will effectively iterate forever as it will await new
-/// operations.
+/// It implements the `Iterator` trait so can be iterated over, yielding successive `Operation`
+/// enums as they are read from the server. This will effectively iterate forever as it will await
+/// new operations.
 pub struct Oplog {
     /// The internal MongoDB cursor for the current position in the oplog.
     cursor: Cursor,
@@ -33,13 +33,13 @@ impl Iterator for Oplog {
 }
 
 impl Oplog {
-    /// Returns a new Oplog for the given client with the default options.
+    /// Returns a new `Oplog` for the given MongoDB client with the default options.
     pub fn new(client: &Client) -> Result<Oplog> {
         OplogBuilder::new(client).build()
     }
 }
 
-/// A builder for an Oplog.
+/// A builder for an `Oplog`.
 ///
 /// This builder enables configuring a filter on the oplog so that only documents matching a given
 /// criteria are returned (e.g. to set a start time or filter out unwanted operation types).
@@ -62,7 +62,7 @@ impl<'a> OplogBuilder<'a> {
         }
     }
 
-    /// Executes the query and builds the oplog.
+    /// Executes the query and builds the `Oplog`.
     pub fn build(&self) -> Result<Oplog> {
         let coll = self.client.db("local").collection("oplog.rs");
 
