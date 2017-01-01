@@ -28,7 +28,7 @@ impl Iterator for Oplog {
     fn next(&mut self) -> Option<Self::Item> {
         loop {
             match self.cursor.next() {
-                Some(Ok(document)) => return Operation::new(document).ok(),
+                Some(Ok(document)) => return Operation::new(&document).ok(),
                 Some(Err(_)) => return None,
                 _ => continue,
             }

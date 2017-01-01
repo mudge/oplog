@@ -74,22 +74,21 @@ pub enum Operation {
 
 impl Operation {
     /// Try to create a new Operation from a BSON document.
-    pub fn new(document: Document) -> Result<Operation> {
-        let op = operation_type(&document);
+    pub fn new(document: &Document) -> Result<Operation> {
+        let op = document.get_str("op")?;
 
         match op {
-            Some('n') => Operation::from_noop(document),
-            Some('i') => Operation::from_insert(document),
-            Some('u') => Operation::from_update(document),
-            Some('d') => Operation::from_delete(document),
-            Some('c') => Operation::from_command(document),
-            Some(unknown) => Err(Error::UnknownOperation(unknown.to_string())),
-            None => Err(Error::InvalidOperation),
+            "n" => Operation::from_noop(document),
+            "i" => Operation::from_insert(document),
+            "u" => Operation::from_update(document),
+            "d" => Operation::from_delete(document),
+            "c" => Operation::from_command(document),
+            op => Err(Error::UnknownOperation(op.into())),
         }
     }
 
     /// Returns a no-op operation for a given document.
-    fn from_noop(document: Document) -> Result<Operation> {
+    fn from_noop(document: &Document) -> Result<Operation> {
         let h = document.get_i64("h")?;
         let ts = document.get_time_stamp("ts")?;
         let o = document.get_document("o")?;
@@ -103,7 +102,7 @@ impl Operation {
     }
 
     /// Return an insert operation for a given document.
-    fn from_insert(document: Document) -> Result<Operation> {
+    fn from_insert(document: &Document) -> Result<Operation> {
         let h = document.get_i64("h")?;
         let ts = document.get_time_stamp("ts")?;
         let ns = document.get_str("ns")?;
@@ -118,7 +117,7 @@ impl Operation {
     }
 
     /// Return an update operation for a given document.
-    fn from_update(document: Document) -> Result<Operation> {
+    fn from_update(document: &Document) -> Result<Operation> {
         let h = document.get_i64("h")?;
         let ts = document.get_time_stamp("ts")?;
         let ns = document.get_str("ns")?;
@@ -135,7 +134,7 @@ impl Operation {
     }
 
     /// Return a delete operation for a given document.
-    fn from_delete(document: Document) -> Result<Operation> {
+    fn from_delete(document: &Document) -> Result<Operation> {
         let h = document.get_i64("h")?;
         let ts = document.get_time_stamp("ts")?;
         let ns = document.get_str("ns")?;
@@ -150,7 +149,7 @@ impl Operation {
     }
 
     /// Return a command operation for a given document.
-    fn from_command(document: Document) -> Result<Operation> {
+    fn from_command(document: &Document) -> Result<Operation> {
         let h = document.get_i64("h")?;
         let ts = document.get_time_stamp("ts")?;
         let ns = document.get_str("ns")?;
@@ -208,11 +207,6 @@ impl fmt::Display for Operation {
     }
 }
 
-/// Return the operation type for a given document.
-fn operation_type(document: &Document) -> Option<char> {
-    document.get_str("op").ok().and_then(|op| op.chars().next())
-}
-
 /// Convert a BSON timestamp into a UTC DateTime.
 fn timestamp_to_datetime(timestamp: i64) -> DateTime<UTC> {
     let seconds = timestamp >> 32;
@@ -224,7 +218,7 @@ fn timestamp_to_datetime(timestamp: i64) -> DateTime<UTC> {
 #[cfg(test)]
 mod tests {
     use Error;
-    use bson::Bson;
+    use bson::{Bson, ValueAccessError};
     use chrono::{UTC, TimeZone};
     use super::Operation;
 
@@ -240,7 +234,7 @@ mod tests {
                 "msg" => "initiating set"
             }
         };
-        let operation = Operation::new(doc).unwrap();
+        let operation = Operation::new(&doc).unwrap();
 
         assert_eq!(
             operation,
@@ -264,7 +258,7 @@ mod tests {
                 "foo" => "bar"
             }
         };
-        let operation = Operation::new(doc).unwrap();
+        let operation = Operation::new(&doc).unwrap();
 
         assert_eq!(
             operation,
@@ -294,7 +288,7 @@ mod tests {
                 }
             }
         };
-        let operation = Operation::new(doc).unwrap();
+        let operation = Operation::new(&doc).unwrap();
 
         assert_eq!(
             operation,
@@ -320,7 +314,7 @@ mod tests {
                 "_id" => 1
             }
         };
-        let operation = Operation::new(doc).unwrap();
+        let operation = Operation::new(&doc).unwrap();
 
         assert_eq!(
             operation,
@@ -345,7 +339,7 @@ mod tests {
                 "create" => "foo"
             }
         };
-        let operation = Operation::new(doc).unwrap();
+        let operation = Operation::new(&doc).unwrap();
 
         assert_eq!(
             operation,
@@ -361,22 +355,22 @@ mod tests {
     #[test]
     fn operation_returns_unknown_operations() {
         let doc = doc! { "op" => "x" };
-        let err = Operation::new(doc).unwrap_err();
+        let operation = Operation::new(&doc);
 
-        match err {
-            Error::UnknownOperation(op) => assert_eq!(op, "x"),
+        match operation {
+            Err(Error::UnknownOperation(op)) => assert_eq!(op, "x"),
             _ => panic!("Expected unknown operation."),
         }
     }
 
     #[test]
-    fn operation_returns_invalid_operations() {
+    fn operation_returns_missing_fields() {
         let doc = doc! { "foo" => "bar" };
-        let err = Operation::new(doc).unwrap_err();
+        let operation = Operation::new(&doc);
 
-        match err {
-            Error::InvalidOperation => {},
-            _ => panic!("Expected invalid operation."),
+        match operation {
+            Err(Error::MissingField(err)) => assert_eq!(err, ValueAccessError::NotPresent),
+            _ => panic!("Expected missing field."),
         }
     }
 }
