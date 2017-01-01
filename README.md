@@ -54,8 +54,7 @@ Full API documentation is available at http://mudge.name/oplog
 
 * [Iterators, Rust by Example](http://rustbyexample.com/trait/iter.html)
 * [Replication Internals](https://www.kchodorow.com/blog/2010/10/12/replication-internals/)
-* [ripgrep code review](http://blog.mbrt.it/2016-12-01-ripgrep-code-review/)
-* [ripgrep](https://github.com/BurntSushi/ripgrep/)
+* [ripgrep](https://github.com/BurntSushi/ripgrep/) was invaluable as a source of idiomatic Rust code (see also [ripgrep code review](http://blog.mbrt.it/2016-12-01-ripgrep-code-review/))
 
 And many thanks to [Ryman](https://github.com/Ryman) for his help along the way.
 
