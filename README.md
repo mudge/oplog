@@ -61,6 +61,6 @@ And many thanks to [Ryman](https://github.com/Ryman) for his help along the way.
 
 ## License
 
-Copyright © 2016 Paul Mucur.
+Copyright © 2016-2017 Paul Mucur.
 
 Distributed under the MIT License.
