@@ -1,4 +1,52 @@
-#[warn(missing_docs)]
+#![warn(missing_docs)]
+
+//! A library for iterating over a MongoDB replica set oplog.
+//!
+//! Given a MongoDB `Client` connected to a replica set, this crate allows you to iterate over an
+//! `Oplog` as if it were a collection of statically typed `Operation`s.
+//!
+//! # Example
+//!
+//! At its most basic, an `Oplog` will yield _all_ operations in the oplog when iterated over:
+//!
+//! ```rust,no_run
+//! # extern crate mongodb;
+//! # extern crate oplog;
+//! use mongodb::{Client, ThreadedClient};
+//! use oplog::Oplog;
+//!
+//! # fn main() {
+//! let client = Client::connect("localhost", 27017).expect("Failed to connect to MongoDB.");
+//!
+//! if let Ok(oplog) = Oplog::new(&client) {
+//!     for operation in oplog {
+//!         // Do something with operation...
+//!     }
+//! }
+//! # }
+//! ```
+//!
+//! Alternatively, an `Oplog` can be built with a filter via `OplogBuilder` to restrict the
+//! operations yielded:
+//!
+//! ```rust,no_run
+//! # #[macro_use]
+//! # extern crate bson;
+//! # extern crate mongodb;
+//! # extern crate oplog;
+//! use mongodb::{Client, ThreadedClient};
+//! use oplog::OplogBuilder;
+//!
+//! # fn main() {
+//! let client = Client::connect("localhost", 27017).expect("Failed to connect to MongoDB.");
+//!
+//! if let Ok(oplog) = OplogBuilder::new(&client).filter(Some(doc! { "op" => "i" })).build() {
+//!     for insert in oplog {
+//!         // Do something with insert operation...
+//!     }
+//! }
+//! # }
+//! ```
 
 #[macro_use]
 extern crate bson;
