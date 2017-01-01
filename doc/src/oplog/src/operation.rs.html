@@ -418,6 +418,20 @@
 <span id="374">374</span>
 <span id="375">375</span>
 <span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! The operation module is responsible for converting MongoDB BSON documents into specific</span>
 <span class='doccomment'>//! `Operation` types, one for each type of document stored in the MongoDB oplog. As much as</span>
@@ -495,6 +509,30 @@
 
 <span class='kw'>impl</span> <span class='ident'>Operation</span> {
     <span class='doccomment'>/// Try to create a new Operation from a BSON document.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Example</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// # #[macro_use]</span>
+    <span class='doccomment'>/// # extern crate bson;</span>
+    <span class='doccomment'>/// # extern crate oplog;</span>
+    <span class='doccomment'>/// # use bson::Bson;</span>
+    <span class='doccomment'>/// use oplog::Operation;</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # fn main() {</span>
+    <span class='doccomment'>/// let document = doc! {</span>
+    <span class='doccomment'>///     &quot;ts&quot; =&gt; (Bson::TimeStamp(1479561394 &lt;&lt; 32)),</span>
+    <span class='doccomment'>///     &quot;h&quot; =&gt; (-1742072865587022793i64),</span>
+    <span class='doccomment'>///     &quot;v&quot; =&gt; 2,</span>
+    <span class='doccomment'>///     &quot;op&quot; =&gt; &quot;i&quot;,</span>
+    <span class='doccomment'>///     &quot;ns&quot; =&gt; &quot;foo.bar&quot;,</span>
+    <span class='doccomment'>///     &quot;o&quot; =&gt; {</span>
+    <span class='doccomment'>///         &quot;foo&quot; =&gt; &quot;bar&quot;</span>
+    <span class='doccomment'>///     }</span>
+    <span class='doccomment'>/// };</span>
+    <span class='doccomment'>/// let operation = Operation::new(&amp;document);</span>
+    <span class='doccomment'>/// # }</span>
+    <span class='doccomment'>/// ```</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>document</span>: <span class='kw-2'>&amp;</span><span class='ident'>Document</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Operation</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>op</span> <span class='op'>=</span> <span class='ident'>document</span>.<span class='ident'>get_str</span>(<span class='string'>&quot;op&quot;</span>)<span class='question-mark'>?</span>;
 
@@ -628,7 +666,7 @@
     }
 }
 
-<span class='doccomment'>/// Convert a BSON timestamp into a UTC DateTime.</span>
+<span class='doccomment'>/// Convert a BSON timestamp into a UTC `DateTime`.</span>
 <span class='kw'>fn</span> <span class='ident'>timestamp_to_datetime</span>(<span class='ident'>timestamp</span>: <span class='ident'>i64</span>) <span class='op'>-&gt;</span> <span class='ident'>DateTime</span><span class='op'>&lt;</span><span class='ident'>UTC</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>seconds</span> <span class='op'>=</span> <span class='ident'>timestamp</span> <span class='op'>&gt;&gt;</span> <span class='number'>32</span>;
     <span class='kw'>let</span> <span class='ident'>nanoseconds</span> <span class='op'>=</span> ((<span class='ident'>timestamp</span> <span class='kw-2'>&amp;</span> <span class='number'>0xFFFFFFFF</span>) <span class='op'>*</span> <span class='number'>1000000</span>) <span class='kw'>as</span> <span class='ident'>u32</span>;
@@ -657,14 +695,12 @@
         };
         <span class='kw'>let</span> <span class='ident'>operation</span> <span class='op'>=</span> <span class='ident'>Operation</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>doc</span>).<span class='ident'>unwrap</span>();
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(
-            <span class='ident'>operation</span>,
-            <span class='ident'>Operation</span>::<span class='ident'>Noop</span> {
-                 <span class='ident'>id</span>: <span class='op'>-</span><span class='number'>2135725856567446411i64</span>,
-                 <span class='ident'>timestamp</span>: <span class='ident'>UTC</span>.<span class='ident'>timestamp</span>(<span class='number'>1479419535</span>, <span class='number'>0</span>),
-                 <span class='ident'>message</span>: <span class='string'>&quot;initiating set&quot;</span>.<span class='ident'>into</span>()
-            }
-        );
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>operation</span>,
+                   <span class='ident'>Operation</span>::<span class='ident'>Noop</span> {
+                       <span class='ident'>id</span>: <span class='op'>-</span><span class='number'>2135725856567446411i64</span>,
+                       <span class='ident'>timestamp</span>: <span class='ident'>UTC</span>.<span class='ident'>timestamp</span>(<span class='number'>1479419535</span>, <span class='number'>0</span>),
+                       <span class='ident'>message</span>: <span class='string'>&quot;initiating set&quot;</span>.<span class='ident'>into</span>(),
+                   });
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -681,15 +717,13 @@
         };
         <span class='kw'>let</span> <span class='ident'>operation</span> <span class='op'>=</span> <span class='ident'>Operation</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>doc</span>).<span class='ident'>unwrap</span>();
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(
-            <span class='ident'>operation</span>,
-            <span class='ident'>Operation</span>::<span class='ident'>Insert</span> {
-                <span class='ident'>id</span>: <span class='op'>-</span><span class='number'>1742072865587022793i64</span>,
-                <span class='ident'>timestamp</span>: <span class='ident'>UTC</span>.<span class='ident'>timestamp</span>(<span class='number'>1479561394</span>, <span class='number'>0</span>),
-                <span class='ident'>namespace</span>: <span class='string'>&quot;foo.bar&quot;</span>.<span class='ident'>into</span>(),
-                <span class='ident'>document</span>: <span class='macro'>doc</span><span class='macro'>!</span> { <span class='string'>&quot;foo&quot;</span> <span class='op'>=&gt;</span> <span class='string'>&quot;bar&quot;</span> },
-            }
-        );
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>operation</span>,
+                   <span class='ident'>Operation</span>::<span class='ident'>Insert</span> {
+                       <span class='ident'>id</span>: <span class='op'>-</span><span class='number'>1742072865587022793i64</span>,
+                       <span class='ident'>timestamp</span>: <span class='ident'>UTC</span>.<span class='ident'>timestamp</span>(<span class='number'>1479561394</span>, <span class='number'>0</span>),
+                       <span class='ident'>namespace</span>: <span class='string'>&quot;foo.bar&quot;</span>.<span class='ident'>into</span>(),
+                       <span class='ident'>document</span>: <span class='macro'>doc</span><span class='macro'>!</span> { <span class='string'>&quot;foo&quot;</span> <span class='op'>=&gt;</span> <span class='string'>&quot;bar&quot;</span> },
+                   });
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -711,16 +745,14 @@
         };
         <span class='kw'>let</span> <span class='ident'>operation</span> <span class='op'>=</span> <span class='ident'>Operation</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>doc</span>).<span class='ident'>unwrap</span>();
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(
-            <span class='ident'>operation</span>,
-            <span class='ident'>Operation</span>::<span class='ident'>Update</span> {
-                <span class='ident'>id</span>: <span class='number'>3511341713062188019i64</span>,
-                <span class='ident'>timestamp</span>: <span class='ident'>UTC</span>.<span class='ident'>timestamp</span>(<span class='number'>1479561033</span>, <span class='number'>0</span>),
-                <span class='ident'>namespace</span>: <span class='string'>&quot;foo.bar&quot;</span>.<span class='ident'>into</span>(),
-                <span class='ident'>query</span>: <span class='macro'>doc</span><span class='macro'>!</span> { <span class='string'>&quot;_id&quot;</span> <span class='op'>=&gt;</span> <span class='number'>1</span> },
-                <span class='ident'>update</span>: <span class='macro'>doc</span><span class='macro'>!</span> { <span class='string'>&quot;$set&quot;</span> <span class='op'>=&gt;</span> { <span class='string'>&quot;foo&quot;</span> <span class='op'>=&gt;</span> <span class='string'>&quot;baz&quot;</span> } },
-            }
-        );
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>operation</span>,
+                   <span class='ident'>Operation</span>::<span class='ident'>Update</span> {
+                       <span class='ident'>id</span>: <span class='number'>3511341713062188019i64</span>,
+                       <span class='ident'>timestamp</span>: <span class='ident'>UTC</span>.<span class='ident'>timestamp</span>(<span class='number'>1479561033</span>, <span class='number'>0</span>),
+                       <span class='ident'>namespace</span>: <span class='string'>&quot;foo.bar&quot;</span>.<span class='ident'>into</span>(),
+                       <span class='ident'>query</span>: <span class='macro'>doc</span><span class='macro'>!</span> { <span class='string'>&quot;_id&quot;</span> <span class='op'>=&gt;</span> <span class='number'>1</span> },
+                       <span class='ident'>update</span>: <span class='macro'>doc</span><span class='macro'>!</span> { <span class='string'>&quot;$set&quot;</span> <span class='op'>=&gt;</span> { <span class='string'>&quot;foo&quot;</span> <span class='op'>=&gt;</span> <span class='string'>&quot;baz&quot;</span> } },
+                   });
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -737,15 +769,13 @@
         };
         <span class='kw'>let</span> <span class='ident'>operation</span> <span class='op'>=</span> <span class='ident'>Operation</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>doc</span>).<span class='ident'>unwrap</span>();
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(
-            <span class='ident'>operation</span>,
-            <span class='ident'>Operation</span>::<span class='ident'>Delete</span> {
-                <span class='ident'>id</span>: <span class='op'>-</span><span class='number'>5457382347563537847i64</span>,
-                <span class='ident'>timestamp</span>: <span class='ident'>UTC</span>.<span class='ident'>timestamp</span>(<span class='number'>1479421186</span>, <span class='number'>0</span>),
-                <span class='ident'>namespace</span>: <span class='string'>&quot;foo.bar&quot;</span>.<span class='ident'>into</span>(),
-                <span class='ident'>query</span>: <span class='macro'>doc</span><span class='macro'>!</span> { <span class='string'>&quot;_id&quot;</span> <span class='op'>=&gt;</span> <span class='number'>1</span> },
-            }
-        );
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>operation</span>,
+                   <span class='ident'>Operation</span>::<span class='ident'>Delete</span> {
+                       <span class='ident'>id</span>: <span class='op'>-</span><span class='number'>5457382347563537847i64</span>,
+                       <span class='ident'>timestamp</span>: <span class='ident'>UTC</span>.<span class='ident'>timestamp</span>(<span class='number'>1479421186</span>, <span class='number'>0</span>),
+                       <span class='ident'>namespace</span>: <span class='string'>&quot;foo.bar&quot;</span>.<span class='ident'>into</span>(),
+                       <span class='ident'>query</span>: <span class='macro'>doc</span><span class='macro'>!</span> { <span class='string'>&quot;_id&quot;</span> <span class='op'>=&gt;</span> <span class='number'>1</span> },
+                   });
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -762,15 +792,13 @@
         };
         <span class='kw'>let</span> <span class='ident'>operation</span> <span class='op'>=</span> <span class='ident'>Operation</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>doc</span>).<span class='ident'>unwrap</span>();
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(
-            <span class='ident'>operation</span>,
-            <span class='ident'>Operation</span>::<span class='ident'>Command</span> {
-                <span class='ident'>id</span>: <span class='op'>-</span><span class='number'>7222343681970774929i64</span>,
-                <span class='ident'>timestamp</span>: <span class='ident'>UTC</span>.<span class='ident'>timestamp</span>(<span class='number'>1479553955</span>, <span class='number'>0</span>),
-                <span class='ident'>namespace</span>: <span class='string'>&quot;test.$cmd&quot;</span>.<span class='ident'>into</span>(),
-                <span class='ident'>command</span>: <span class='macro'>doc</span><span class='macro'>!</span> { <span class='string'>&quot;create&quot;</span> <span class='op'>=&gt;</span> <span class='string'>&quot;foo&quot;</span> },
-            }
-        );
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>operation</span>,
+                   <span class='ident'>Operation</span>::<span class='ident'>Command</span> {
+                       <span class='ident'>id</span>: <span class='op'>-</span><span class='number'>7222343681970774929i64</span>,
+                       <span class='ident'>timestamp</span>: <span class='ident'>UTC</span>.<span class='ident'>timestamp</span>(<span class='number'>1479553955</span>, <span class='number'>0</span>),
+                       <span class='ident'>namespace</span>: <span class='string'>&quot;test.$cmd&quot;</span>.<span class='ident'>into</span>(),
+                       <span class='ident'>command</span>: <span class='macro'>doc</span><span class='macro'>!</span> { <span class='string'>&quot;create&quot;</span> <span class='op'>=&gt;</span> <span class='string'>&quot;foo&quot;</span> },
+                   });
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
