@@ -236,14 +236,12 @@ mod tests {
         };
         let operation = Operation::new(&doc).unwrap();
 
-        assert_eq!(
-            operation,
-            Operation::Noop {
-                 id: -2135725856567446411i64,
-                 timestamp: UTC.timestamp(1479419535, 0),
-                 message: "initiating set".into()
-            }
-        );
+        assert_eq!(operation,
+                   Operation::Noop {
+                       id: -2135725856567446411i64,
+                       timestamp: UTC.timestamp(1479419535, 0),
+                       message: "initiating set".into(),
+                   });
     }
 
     #[test]
@@ -260,15 +258,13 @@ mod tests {
         };
         let operation = Operation::new(&doc).unwrap();
 
-        assert_eq!(
-            operation,
-            Operation::Insert {
-                id: -1742072865587022793i64,
-                timestamp: UTC.timestamp(1479561394, 0),
-                namespace: "foo.bar".into(),
-                document: doc! { "foo" => "bar" },
-            }
-        );
+        assert_eq!(operation,
+                   Operation::Insert {
+                       id: -1742072865587022793i64,
+                       timestamp: UTC.timestamp(1479561394, 0),
+                       namespace: "foo.bar".into(),
+                       document: doc! { "foo" => "bar" },
+                   });
     }
 
     #[test]
@@ -290,16 +286,14 @@ mod tests {
         };
         let operation = Operation::new(&doc).unwrap();
 
-        assert_eq!(
-            operation,
-            Operation::Update {
-                id: 3511341713062188019i64,
-                timestamp: UTC.timestamp(1479561033, 0),
-                namespace: "foo.bar".into(),
-                query: doc! { "_id" => 1 },
-                update: doc! { "$set" => { "foo" => "baz" } },
-            }
-        );
+        assert_eq!(operation,
+                   Operation::Update {
+                       id: 3511341713062188019i64,
+                       timestamp: UTC.timestamp(1479561033, 0),
+                       namespace: "foo.bar".into(),
+                       query: doc! { "_id" => 1 },
+                       update: doc! { "$set" => { "foo" => "baz" } },
+                   });
     }
 
     #[test]
@@ -316,15 +310,13 @@ mod tests {
         };
         let operation = Operation::new(&doc).unwrap();
 
-        assert_eq!(
-            operation,
-            Operation::Delete {
-                id: -5457382347563537847i64,
-                timestamp: UTC.timestamp(1479421186, 0),
-                namespace: "foo.bar".into(),
-                query: doc! { "_id" => 1 },
-            }
-        );
+        assert_eq!(operation,
+                   Operation::Delete {
+                       id: -5457382347563537847i64,
+                       timestamp: UTC.timestamp(1479421186, 0),
+                       namespace: "foo.bar".into(),
+                       query: doc! { "_id" => 1 },
+                   });
     }
 
     #[test]
@@ -341,15 +333,13 @@ mod tests {
         };
         let operation = Operation::new(&doc).unwrap();
 
-        assert_eq!(
-            operation,
-            Operation::Command {
-                id: -7222343681970774929i64,
-                timestamp: UTC.timestamp(1479553955, 0),
-                namespace: "test.$cmd".into(),
-                command: doc! { "create" => "foo" },
-            }
-        );
+        assert_eq!(operation,
+                   Operation::Command {
+                       id: -7222343681970774929i64,
+                       timestamp: UTC.timestamp(1479553955, 0),
+                       namespace: "test.$cmd".into(),
+                       command: doc! { "create" => "foo" },
+                   });
     }
 
     #[test]
