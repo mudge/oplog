@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/Users/mudge/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.17/src/unix/bsd/apple/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/Users/mudge/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.18/src/unix/bsd/apple/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -1542,6 +1542,51 @@
 <span id="1498">1498</span>
 <span id="1499">1499</span>
 <span id="1500">1500</span>
+<span id="1501">1501</span>
+<span id="1502">1502</span>
+<span id="1503">1503</span>
+<span id="1504">1504</span>
+<span id="1505">1505</span>
+<span id="1506">1506</span>
+<span id="1507">1507</span>
+<span id="1508">1508</span>
+<span id="1509">1509</span>
+<span id="1510">1510</span>
+<span id="1511">1511</span>
+<span id="1512">1512</span>
+<span id="1513">1513</span>
+<span id="1514">1514</span>
+<span id="1515">1515</span>
+<span id="1516">1516</span>
+<span id="1517">1517</span>
+<span id="1518">1518</span>
+<span id="1519">1519</span>
+<span id="1520">1520</span>
+<span id="1521">1521</span>
+<span id="1522">1522</span>
+<span id="1523">1523</span>
+<span id="1524">1524</span>
+<span id="1525">1525</span>
+<span id="1526">1526</span>
+<span id="1527">1527</span>
+<span id="1528">1528</span>
+<span id="1529">1529</span>
+<span id="1530">1530</span>
+<span id="1531">1531</span>
+<span id="1532">1532</span>
+<span id="1533">1533</span>
+<span id="1534">1534</span>
+<span id="1535">1535</span>
+<span id="1536">1536</span>
+<span id="1537">1537</span>
+<span id="1538">1538</span>
+<span id="1539">1539</span>
+<span id="1540">1540</span>
+<span id="1541">1541</span>
+<span id="1542">1542</span>
+<span id="1543">1543</span>
+<span id="1544">1544</span>
+<span id="1545">1545</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Apple (ios/darwin)-specific definitions</span>
 <span class='doccomment'>//!</span>
@@ -1570,6 +1615,16 @@
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>timezone</span> {}
 
 <span class='macro'>s</span><span class='macro'>!</span> {
+    <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>aiocb</span> {
+        <span class='kw'>pub</span> <span class='ident'>aio_fildes</span>: ::<span class='ident'>c_int</span>,
+        <span class='kw'>pub</span> <span class='ident'>aio_offset</span>: ::<span class='ident'>off_t</span>,
+        <span class='kw'>pub</span> <span class='ident'>aio_buf</span>: <span class='op'>*</span><span class='kw-2'>mut</span> ::<span class='ident'>c_void</span>,
+        <span class='kw'>pub</span> <span class='ident'>aio_nbytes</span>: ::<span class='ident'>size_t</span>,
+        <span class='kw'>pub</span> <span class='ident'>aio_reqprio</span>: ::<span class='ident'>c_int</span>,
+        <span class='kw'>pub</span> <span class='ident'>aio_sigevent</span>: <span class='ident'>sigevent</span>,
+        <span class='kw'>pub</span> <span class='ident'>aio_lio_opcode</span>: ::<span class='ident'>c_int</span>
+    }
+
     <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>utmpx</span> {
         <span class='kw'>pub</span> <span class='ident'>ut_user</span>: [::<span class='ident'>c_char</span>; <span class='ident'>_UTX_USERSIZE</span>],
         <span class='kw'>pub</span> <span class='ident'>ut_id</span>: [::<span class='ident'>c_char</span>; <span class='ident'>_UTX_IDSIZE</span>],
@@ -1847,6 +1902,14 @@
         <span class='kw'>pub</span> <span class='ident'>int_n_sep_by_space</span>: ::<span class='ident'>c_char</span>,
         <span class='kw'>pub</span> <span class='ident'>int_p_sign_posn</span>: ::<span class='ident'>c_char</span>,
         <span class='kw'>pub</span> <span class='ident'>int_n_sign_posn</span>: ::<span class='ident'>c_char</span>,
+    }
+
+    <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>sigevent</span> {
+        <span class='kw'>pub</span> <span class='ident'>sigev_notify</span>: ::<span class='ident'>c_int</span>,
+        <span class='kw'>pub</span> <span class='ident'>sigev_signo</span>: ::<span class='ident'>c_int</span>,
+        <span class='kw'>pub</span> <span class='ident'>sigev_value</span>: ::<span class='ident'>sigval</span>,
+        <span class='ident'>__unused1</span>: <span class='op'>*</span><span class='kw-2'>mut</span> ::<span class='ident'>c_void</span>,       <span class='comment'>//actually a function pointer</span>
+        <span class='kw'>pub</span> <span class='ident'>sigev_notify_attributes</span>: <span class='op'>*</span><span class='kw-2'>mut</span> ::<span class='ident'>pthread_attr_t</span>
     }
 }
 
@@ -2876,6 +2939,20 @@
 
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SEM_FAILED</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>sem_t</span> <span class='op'>=</span> <span class='op'>-</span><span class='number'>1isize</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw-2'>mut</span> ::<span class='ident'>sem_t</span>;
 
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SIGEV_NONE</span>: ::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>0</span>;
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SIGEV_SIGNAL</span>: ::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>1</span>;
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SIGEV_THREAD</span>: ::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>3</span>;
+
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AIO_CANCELED</span>: ::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>2</span>;
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AIO_NOTCANCELED</span>: ::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>4</span>;
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AIO_ALLDONE</span>: ::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>1</span>;
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AIO_LISTIO_MAX</span>: ::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>16</span>;
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LIO_NOP</span>: ::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>0</span>;
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LIO_WRITE</span>: ::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>2</span>;
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LIO_READ</span>: ::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>1</span>;
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LIO_WAIT</span>: ::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>2</span>;
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>LIO_NOWAIT</span>: ::<span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>1</span>;
+
 <span class='macro'>f</span><span class='macro'>!</span> {
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>WSTOPSIG</span>(<span class='ident'>status</span>: ::<span class='ident'>c_int</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span> {
         <span class='ident'>status</span> <span class='op'>&gt;&gt;</span> <span class='number'>8</span>
@@ -2899,6 +2976,19 @@
 }
 
 <span class='kw'>extern</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>aio_read</span>(<span class='ident'>aiocbp</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>aiocb</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>aio_write</span>(<span class='ident'>aiocbp</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>aiocb</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>aio_fsync</span>(<span class='ident'>op</span>: ::<span class='ident'>c_int</span>, <span class='ident'>aiocbp</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>aiocb</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>aio_error</span>(<span class='ident'>aiocbp</span>: <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>aiocb</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>aio_return</span>(<span class='ident'>aiocbp</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>aiocb</span>) <span class='op'>-&gt;</span> ::<span class='ident'>ssize_t</span>;
+    <span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>all</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;macos&quot;</span>, <span class='ident'>target_arch</span> <span class='op'>=</span> <span class='string'>&quot;x86&quot;</span>),
+               <span class='ident'>link_name</span> <span class='op'>=</span> <span class='string'>&quot;aio_suspend$UNIX2003&quot;</span>)]</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>aio_suspend</span>(<span class='ident'>aiocb_list</span>: <span class='op'>*</span><span class='kw'>const</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>aiocb</span>, <span class='ident'>nitems</span>: ::<span class='ident'>c_int</span>,
+                       <span class='ident'>timeout</span>: <span class='op'>*</span><span class='kw'>const</span> ::<span class='ident'>timespec</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>aio_cancel</span>(<span class='ident'>fd</span>: ::<span class='ident'>c_int</span>, <span class='ident'>aiocbp</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>aiocb</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>lio_listio</span>(<span class='ident'>mode</span>: ::<span class='ident'>c_int</span>, <span class='ident'>aiocb_list</span>: <span class='op'>*</span><span class='kw'>const</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>aiocb</span>,
+                      <span class='ident'>nitems</span>: ::<span class='ident'>c_int</span>, <span class='ident'>sevp</span>: <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>sigevent</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
+
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>lutimes</span>(<span class='ident'>file</span>: <span class='op'>*</span><span class='kw'>const</span> ::<span class='ident'>c_char</span>, <span class='ident'>times</span>: <span class='op'>*</span><span class='kw'>const</span> ::<span class='ident'>timeval</span>) <span class='op'>-&gt;</span> ::<span class='ident'>c_int</span>;
 
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>getutxent</span>() <span class='op'>-&gt;</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>utmpx</span>;
