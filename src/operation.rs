@@ -74,6 +74,30 @@ pub enum Operation {
 
 impl Operation {
     /// Try to create a new Operation from a BSON document.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # #[macro_use]
+    /// # extern crate bson;
+    /// # extern crate oplog;
+    /// # use bson::Bson;
+    /// use oplog::Operation;
+    ///
+    /// # fn main() {
+    /// let document = doc! {
+    ///     "ts" => (Bson::TimeStamp(1479561394 << 32)),
+    ///     "h" => (-1742072865587022793i64),
+    ///     "v" => 2,
+    ///     "op" => "i",
+    ///     "ns" => "foo.bar",
+    ///     "o" => {
+    ///         "foo" => "bar"
+    ///     }
+    /// };
+    /// let operation = Operation::new(&document);
+    /// # }
+    /// ```
     pub fn new(document: &Document) -> Result<Operation> {
         let op = document.get_str("op")?;
 
