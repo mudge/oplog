@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["get_input_unwrap",""]],"macro":[["scan_fmt","(a,+) = scan_fmt!( input_string, format_string, types,+ )"],["scanln_fmt","(a,+) = scanln_fmt!( format_string, types,+ ) <p>Same as scan_fmt!(), but reads input string from stdin.</p>"]],"mod":[["parse",""]]});

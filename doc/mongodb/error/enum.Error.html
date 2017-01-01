@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Error` enum in crate `mongodb`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Error">
+
+    <title>mongodb::error::Error - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>mongodb</a>::<wbr><a href='index.html'>error</a></p><script>window.sidebarCurrent = {name: 'Error', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>mongodb</a>::<wbr><a href='index.html'>error</a>::<wbr><a class='enum' href=''>Error</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-3873' class='srclink' href='../../src/mongodb/error.rs.html#36-74' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum Error {
+    IoError(<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>),
+    EncoderError(<a class='enum' href='../../bson/encoder/error/enum.EncoderError.html' title='bson::encoder::error::EncoderError'>EncoderError</a>),
+    DecoderError(<a class='enum' href='../../bson/decoder/error/enum.DecoderError.html' title='bson::decoder::error::DecoderError'>DecoderError</a>),
+    OIDError(<a class='enum' href='../../bson/oid/enum.Error.html' title='bson::oid::Error'>Error</a>),
+    FromHexError(<a class='enum' href='../../rustc_serialize/hex/enum.FromHexError.html' title='rustc_serialize::hex::FromHexError'>FromHexError</a>),
+    WriteError(<a class='struct' href='../../mongodb/coll/error/struct.WriteException.html' title='mongodb::coll::error::WriteException'>WriteException</a>),
+    BulkWriteError(<a class='struct' href='../../mongodb/coll/error/struct.BulkWriteException.html' title='mongodb::coll::error::BulkWriteException'>BulkWriteException</a>),
+    ArgumentError(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>),
+    OperationError(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>),
+    ResponseError(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>),
+    CursorNotFoundError,
+    PoisonLockError,
+    CodedError(<a class='enum' href='../../mongodb/error/enum.ErrorCode.html' title='mongodb::error::ErrorCode'>ErrorCode</a>),
+    EventListenerError(<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a>&gt;&gt;),
+    MaliciousServerError(<a class='enum' href='../../mongodb/error/enum.MaliciousServerErrorType.html' title='mongodb::error::MaliciousServerErrorType'>MaliciousServerErrorType</a>),
+    DefaultError(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>),
+}</pre><div class='docblock'><p>The error type for MongoDB operations.</p>
+</div><h2 class='variants'>Variants</h2>
+<span id='variant.IoError' class='variant'><span id='IoError.v' class='invisible'><code>IoError(<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>)</code></span></span><div class='docblock'><p>I/O operation errors of <code>Read</code>, <code>Write</code>, <code>Seek</code>, and associated traits.</p>
+</div><span id='variant.EncoderError' class='variant'><span id='EncoderError.v' class='invisible'><code>EncoderError(<a class='enum' href='../../bson/encoder/error/enum.EncoderError.html' title='bson::encoder::error::EncoderError'>EncoderError</a>)</code></span></span><div class='docblock'><p>A BSON struct could not be encoded.</p>
+</div><span id='variant.DecoderError' class='variant'><span id='DecoderError.v' class='invisible'><code>DecoderError(<a class='enum' href='../../bson/decoder/error/enum.DecoderError.html' title='bson::decoder::error::DecoderError'>DecoderError</a>)</code></span></span><div class='docblock'><p>A BSON struct could not be decoded.</p>
+</div><span id='variant.OIDError' class='variant'><span id='OIDError.v' class='invisible'><code>OIDError(<a class='enum' href='../../bson/oid/enum.Error.html' title='bson::oid::Error'>Error</a>)</code></span></span><div class='docblock'><p>An ObjectId could not be generated.</p>
+</div><span id='variant.FromHexError' class='variant'><span id='FromHexError.v' class='invisible'><code>FromHexError(<a class='enum' href='../../rustc_serialize/hex/enum.FromHexError.html' title='rustc_serialize::hex::FromHexError'>FromHexError</a>)</code></span></span><div class='docblock'><p>A hexadecimal string could not be converted to bytes.</p>
+</div><span id='variant.WriteError' class='variant'><span id='WriteError.v' class='invisible'><code>WriteError(<a class='struct' href='../../mongodb/coll/error/struct.WriteException.html' title='mongodb::coll::error::WriteException'>WriteException</a>)</code></span></span><div class='docblock'><p>A single-write operation failed.</p>
+</div><span id='variant.BulkWriteError' class='variant'><span id='BulkWriteError.v' class='invisible'><code>BulkWriteError(<a class='struct' href='../../mongodb/coll/error/struct.BulkWriteException.html' title='mongodb::coll::error::BulkWriteException'>BulkWriteException</a>)</code></span></span><div class='docblock'><p>A bulk-write operation failed due to one or more lower-level write-related errors.</p>
+</div><span id='variant.ArgumentError' class='variant'><span id='ArgumentError.v' class='invisible'><code>ArgumentError(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>)</code></span></span><div class='docblock'><p>An invalid function or operational argument was provided.</p>
+</div><span id='variant.OperationError' class='variant'><span id='OperationError.v' class='invisible'><code>OperationError(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>)</code></span></span><div class='docblock'><p>A database operation failed to send or receive a reply.</p>
+</div><span id='variant.ResponseError' class='variant'><span id='ResponseError.v' class='invisible'><code>ResponseError(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>)</code></span></span><div class='docblock'><p>A database operation returned an invalid reply.</p>
+</div><span id='variant.CursorNotFoundError' class='variant'><span id='CursorNotFoundError.v' class='invisible'><code>CursorNotFoundError</code></span></span><div class='docblock'><p>A cursor operation failed to return a cursor.</p>
+</div><span id='variant.PoisonLockError' class='variant'><span id='PoisonLockError.v' class='invisible'><code>PoisonLockError</code></span></span><div class='docblock'><p>The application failed to secure a mutex due to a poisoned lock.</p>
+</div><span id='variant.CodedError' class='variant'><span id='CodedError.v' class='invisible'><code>CodedError(<a class='enum' href='../../mongodb/error/enum.ErrorCode.html' title='mongodb::error::ErrorCode'>ErrorCode</a>)</code></span></span><div class='docblock'><p>A server error with a given code.</p>
+</div><span id='variant.EventListenerError' class='variant'><span id='EventListenerError.v' class='invisible'><code>EventListenerError(<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a>&gt;&gt;)</code></span></span><div class='docblock'><p>The client was unable to emit the events to the listeners due to a poisoned lock;
+all event listeners were dropped, so they will have to be registered again. If the
+client is unable to emit a failure result, the error it failed to report is bundled
+into the <code>EventListenerError</code>.</p>
+</div><span id='variant.MaliciousServerError' class='variant'><span id='MaliciousServerError.v' class='invisible'><code>MaliciousServerError(<a class='enum' href='../../mongodb/error/enum.MaliciousServerErrorType.html' title='mongodb::error::MaliciousServerErrorType'>MaliciousServerErrorType</a>)</code></span></span><div class='docblock'><p>The server that the client is attempting to authenticate to does not actually have
+the user&#39;s authentication information stored.</p>
+</div><span id='variant.DefaultError' class='variant'><span id='DefaultError.v' class='invisible'><code>DefaultError(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>)</code></span></span><div class='docblock'><p>A standard error with a string description;
+a more specific error should generally be used.</p>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-3904' class='srclink' href='../../src/mongodb/error.rs.html#35' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;&amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt; for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1365' class='srclink' href='../../src/mongodb/error.rs.html#82-86' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from' class='method'><span id='from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(s: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt; for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1369' class='srclink' href='../../src/mongodb/error.rs.html#88-92' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from-1' class='method'><span id='from.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(s: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>) -&gt; <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='../../mongodb/coll/error/struct.WriteException.html' title='mongodb::coll::error::WriteException'>WriteException</a>&gt; for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1372' class='srclink' href='../../src/mongodb/error.rs.html#94-98' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from-2' class='method'><span id='from.v-2' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(err: <a class='struct' href='../../mongodb/coll/error/struct.WriteException.html' title='mongodb::coll::error::WriteException'>WriteException</a>) -&gt; <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='../../mongodb/coll/error/struct.BulkWriteException.html' title='mongodb::coll::error::BulkWriteException'>BulkWriteException</a>&gt; for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1375' class='srclink' href='../../src/mongodb/error.rs.html#100-104' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from-3' class='method'><span id='from.v-3' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(err: <a class='struct' href='../../mongodb/coll/error/struct.BulkWriteException.html' title='mongodb::coll::error::BulkWriteException'>BulkWriteException</a>) -&gt; <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='enum' href='../../bson/encoder/error/enum.EncoderError.html' title='bson::encoder::error::EncoderError'>EncoderError</a>&gt; for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1378' class='srclink' href='../../src/mongodb/error.rs.html#106-110' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from-4' class='method'><span id='from.v-4' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(err: <a class='enum' href='../../bson/encoder/error/enum.EncoderError.html' title='bson::encoder::error::EncoderError'>EncoderError</a>) -&gt; <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='enum' href='../../bson/decoder/error/enum.DecoderError.html' title='bson::decoder::error::DecoderError'>DecoderError</a>&gt; for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1381' class='srclink' href='../../src/mongodb/error.rs.html#112-116' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from-5' class='method'><span id='from.v-5' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(err: <a class='enum' href='../../bson/decoder/error/enum.DecoderError.html' title='bson::decoder::error::DecoderError'>DecoderError</a>) -&gt; <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='enum' href='../../bson/oid/enum.Error.html' title='bson::oid::Error'>Error</a>&gt; for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1384' class='srclink' href='../../src/mongodb/error.rs.html#118-122' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from-6' class='method'><span id='from.v-6' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(err: <a class='enum' href='../../bson/oid/enum.Error.html' title='bson::oid::Error'>Error</a>) -&gt; <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='enum' href='../../rustc_serialize/hex/enum.FromHexError.html' title='rustc_serialize::hex::FromHexError'>FromHexError</a>&gt; for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1387' class='srclink' href='../../src/mongodb/error.rs.html#124-128' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from-7' class='method'><span id='from.v-7' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(err: <a class='enum' href='../../rustc_serialize/hex/enum.FromHexError.html' title='rustc_serialize::hex::FromHexError'>FromHexError</a>) -&gt; <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt; for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1390' class='srclink' href='../../src/mongodb/error.rs.html#130-134' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from-8' class='method'><span id='from.v-8' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(err: <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>) -&gt; <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/sys_common/poison/struct.PoisonError.html' title='std::sys_common::poison::PoisonError'>PoisonError</a>&lt;T&gt;&gt; for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1393' class='srclink' href='../../src/mongodb/error.rs.html#136-140' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from-9' class='method'><span id='from.v-9' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(_: <a class='struct' href='https://doc.rust-lang.org/nightly/std/sys_common/poison/struct.PoisonError.html' title='std::sys_common::poison::PoisonError'>PoisonError</a>&lt;T&gt;) -&gt; <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1396' class='srclink' href='../../src/mongodb/error.rs.html#142-174' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt-1' class='method'><span id='fmt.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, fmt: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html' title='std::error::Error'>Error</a> for <a class='enum' href='../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1416' class='srclink' href='../../src/mongodb/error.rs.html#176-235' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.description' class='method'><span id='description.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html#tymethod.description' class='fnname'>description</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></span></h4>
+<div class='docblock'><p>A short description of the error. <a href="https://doc.rust-lang.org/nightly/std/error/trait.Error.html#tymethod.description">Read more</a></p>
+</div><h4 id='method.cause' class='method'><span id='cause.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html#method.cause' class='fnname'>cause</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/error/trait.Error.html' title='std::error::Error'>Error</a>&gt;</code></span></h4>
+<div class='docblock'><p>The lower-level cause of this error, if any. <a href="https://doc.rust-lang.org/nightly/std/error/trait.Error.html#method.cause">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "mongodb";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

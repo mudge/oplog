@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ReadMode","Indicates how a server should be selected during read operations."]],"struct":[["ReadPreference",""],["WriteConcern",""]]});

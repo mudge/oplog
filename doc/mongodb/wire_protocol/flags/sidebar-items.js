@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["OpInsertFlags","Represents the bit vector of flags for an OP_INSERT message."],["OpQueryFlags","Represents the bit vector of flags for an OP_QUERY message."],["OpReplyFlags","Represents the bit vector of options for an OP_REPLY message."],["OpUpdateFlags","Represents the bit vector of options for an OP_UPDATE message."]]});

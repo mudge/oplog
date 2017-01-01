@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `gridfs` mod in crate `mongodb`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, gridfs">
+
+    <title>mongodb::gridfs - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>mongodb</a></p><script>window.sidebarCurrent = {name: 'gridfs', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>mongodb</a>::<wbr><a class='mod' href=''>gridfs</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-1456' class='srclink' href='../../src/mongodb/gridfs/mod.rs.html#1-199' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Specification for storing and retrieving files that exceed 16MB within MongoDB.</p>
+
+<p>Instead of storing a file in a single document, GridFS divides a file into parts, or chunks,
+and stores each of those chunks as a separate document. By default GridFS limits chunk size to
+255k. GridFS uses two collections to store files. One collection stores the file chunks, and
+the other stores file metadata.
+When you query a GridFS store for a file, the driver or client will reassemble the chunks as
+needed. You can perform range queries on files stored through GridFS. You also can access
+information from arbitrary sections of files, which allows you to “skip” into the middle of
+a video or audio file.
+GridFS is useful not only for storing files that exceed 16MB but also for storing any files for
+which you want access without having to load the entire file into memory.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='ident'>client</span> <span class='op'>=</span> <span class='ident'>Client</span>::<span class='ident'>connect</span>(<span class='string'>&quot;localhost&quot;</span>, <span class='number'>27017</span>).<span class='ident'>unwrap</span>();
+<span class='kw'>let</span> <span class='ident'>db</span> <span class='op'>=</span> <span class='ident'>client</span>.<span class='ident'>db</span>(<span class='string'>&quot;grid&quot;</span>);
+<span class='kw'>let</span> <span class='ident'>fs</span> <span class='op'>=</span> <span class='ident'>Store</span>::<span class='ident'>with_db</span>(<span class='ident'>db</span>.<span class='ident'>clone</span>());
+
+<span class='ident'>fs</span>.<span class='ident'>put</span>(<span class='ident'>String</span>::<span class='ident'>from</span>(<span class='string'>&quot;/path/to/local_file.mp4&quot;</span>)).<span class='ident'>unwrap</span>();
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>file</span> <span class='op'>=</span> <span class='ident'>fs</span>.<span class='ident'>open</span>(<span class='ident'>String</span>::<span class='ident'>from</span>(<span class='string'>&quot;/path/to/local_file.mp4&quot;</span>)).<span class='ident'>unwrap</span>();
+
+<span class='kw'>let</span> <span class='ident'>id</span> <span class='op'>=</span> <span class='ident'>file</span>.<span class='ident'>doc</span>.<span class='ident'>id</span>.<span class='ident'>clone</span>();
+<span class='kw'>let</span> <span class='ident'>chunk_bytes</span> <span class='op'>=</span> <span class='ident'>file</span>.<span class='ident'>find_chunk</span>(<span class='ident'>id</span>, <span class='number'>5</span>).<span class='ident'>unwrap</span>();
+<span class='ident'>file</span>.<span class='ident'>close</span>().<span class='ident'>unwrap</span>();</pre>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='file/index.html'
+                                  title='mongodb::gridfs::file'>file</a></td>
+                           <td class='docblock-short'>
+                                <p>Lower-level file and chunk representations in GridFS.</p>
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.FileCursor.html'
+                                  title='mongodb::gridfs::FileCursor'>FileCursor</a></td>
+                           <td class='docblock-short'>
+                                <p>A default cursor wrapper that maps bson documents into GridFS file representations.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.StoreInner.html'
+                                  title='mongodb::gridfs::StoreInner'>StoreInner</a></td>
+                           <td class='docblock-short'>
+                                <p>Interfaces with a GridFS instance.</p>
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.ThreadedStore.html'
+                                  title='mongodb::gridfs::ThreadedStore'>ThreadedStore</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.Store.html'
+                                  title='mongodb::gridfs::Store'>Store</a></td>
+                           <td class='docblock-short'>
+                                <p>Alias for a thread-safe GridFS instance.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "mongodb";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

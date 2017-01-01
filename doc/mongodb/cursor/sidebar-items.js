@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["DEFAULT_BATCH_SIZE",""]],"struct":[["Cursor","Maintains a connection to the server and lazily returns documents from a query."]]});

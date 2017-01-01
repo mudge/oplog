@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Error","Error enumerates the list of possible error conditions when tailing an oplog."],["Operation","A MongoDB oplog operation."]],"struct":[["Oplog","Oplog represents a MongoDB replica set oplog."],["OplogBuilder","A builder for an `Oplog`."]],"type":[["Result","A type alias for convenience so we can fix the error to our own `Error` type."]]});

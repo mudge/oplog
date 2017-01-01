@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ErrorCode` enum in crate `mongodb`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ErrorCode">
+
+    <title>mongodb::error::ErrorCode - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>mongodb</a>::<wbr><a href='index.html'>error</a></p><script>window.sidebarCurrent = {name: 'ErrorCode', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>mongodb</a>::<wbr><a href='index.html'>error</a>::<wbr><a class='enum' href=''>ErrorCode</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-3947' class='srclink' href='../../src/mongodb/error.rs.html#239-394' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum ErrorCode {
+    OK,
+    InternalError,
+    BadValue,
+    OBSOLETE_DuplicateKey,
+    NoSuchKey,
+    GraphContainsCycle,
+    HostUnreachable,
+    HostNotFound,
+    UnknownError,
+    FailedToParse,
+    CannotMutateObject,
+    UserNotFound,
+    UnsupportedFormat,
+    Unauthorized,
+    TypeMismatch,
+    Overflow,
+    InvalidLength,
+    ProtocolError,
+    AuthenticationFailed,
+    CannotReuseObject,
+    IllegalOperation,
+    EmptyArrayOperation,
+    InvalidBSON,
+    AlreadyInitialized,
+    LockTimeout,
+    RemoteValidationError,
+    NamespaceNotFound,
+    IndexNotFound,
+    PathNotViable,
+    NonExistentPath,
+    InvalidPath,
+    RoleNotFound,
+    RolesNotRelated,
+    PrivilegeNotFound,
+    CannotBackfillArray,
+    UserModificationFailed,
+    RemoteChangeDetected,
+    FileRenameFailed,
+    FileNotOpen,
+    FileStreamFailed,
+    ConflictingUpdateOperators,
+    FileAlreadyOpen,
+    LogWriteFailed,
+    CursorNotFound,
+    UserDataInconsistent,
+    LockBusy,
+    NoMatchingDocument,
+    NamespaceExists,
+    InvalidRoleModification,
+    ExceededTimeLimit,
+    ManualInterventionRequired,
+    DollarPrefixedFieldName,
+    InvalidIdField,
+    NotSingleValueField,
+    InvalidDBRef,
+    EmptyFieldName,
+    DottedFieldName,
+    RoleModificationFailed,
+    CommandNotFound,
+    DatabaseNotFound,
+    ShardKeyNotFound,
+    OplogOperationUnsupported,
+    StaleShardVersion,
+    WriteConcernFailed,
+    MultipleErrorsOccurred,
+    ImmutableField,
+    CannotCreateIndex,
+    IndexAlreadyExists,
+    AuthSchemaIncompatible,
+    ShardNotFound,
+    ReplicaSetNotFound,
+    InvalidOptions,
+    InvalidNamespace,
+    NodeNotFound,
+    WriteConcernLegacyOK,
+    NoReplicationEnabled,
+    OperationIncomplete,
+    CommandResultSchemaViolation,
+    UnknownReplWriteConcern,
+    RoleDataInconsistent,
+    NoWhereParseContext,
+    NoProgressMade,
+    RemoteResultsUnavailable,
+    DuplicateKeyValue,
+    IndexOptionsConflict,
+    IndexKeySpecsConflict,
+    CannotSplit,
+    SplitFailed,
+    NetworkTimeout,
+    CallbackCanceled,
+    ShutdownInProgress,
+    SecondaryAheadOfPrimary,
+    InvalidReplicaSetConfig,
+    NotYetInitialized,
+    NotSecondary,
+    OperationFailed,
+    NoProjectionFound,
+    DBPathInUse,
+    WriteConcernNotDefined,
+    CannotSatisfyWriteConcern,
+    OutdatedClient,
+    IncompatibleAuditMetadata,
+    NewReplicaSetConfigurationIncompatible,
+    NodeNotElectable,
+    IncompatibleShardingMetadata,
+    DistributedClockSkewed,
+    LockFailed,
+    InconsistentReplicaSetNames,
+    ConfigurationInProgress,
+    CannotInitializeNodeWithData,
+    NotExactValueField,
+    WriteConflict,
+    InitialSyncFailure,
+    InitialSyncOplogSourceMissing,
+    CommandNotSupported,
+    DocTooLargeForCapped,
+    ConflictingOperationInProgress,
+    NamespaceNotSharded,
+    InvalidSyncSource,
+    OplogStartMissing,
+    DocumentValidationFailure,
+    OBSOLETE_ReadAfterOptimeTimeout,
+    NotAReplicaSet,
+    IncompatibleElectionProtocol,
+    CommandFailed,
+    RPCProtocolNegotiationFailed,
+    UnrecoverableRollbackError,
+    LockNotFound,
+    LockStateChangeFailed,
+    SymbolNotFound,
+    RLPInitializationFailed,
+    ConfigServersInconsistent,
+    FailedToSatisfyReadPreference,
+    XXX_TEMP_NAME_ReadCommittedCurrentlyUnavailable,
+    StaleTerm,
+    CappedPositionLost,
+    IncompatibleShardingConfigVersion,
+    RemoteOplogStale,
+    JSInterpreterFailure,
+    NotMaster,
+    DuplicateKey,
+    InterruptedAtShutdown,
+    Interrupted,
+    BackgroundOperationInProgressForDatabase,
+    BackgroundOperationInProgressForNamespace,
+    PrepareConfigsFailedCode,
+    DatabaseDifferCase,
+    ShardKeyTooBig,
+    SendStaleConfig,
+    NotMasterNoSlaveOkCode,
+    NotMasterOrSecondaryCode,
+    OutOfDiskSpace,
+    KeyTooLong,
+    MaxError,
+}</pre><h2 class='variants'>Variants</h2>
+<span id='variant.OK' class='variant'><span id='OK.v' class='invisible'><code>OK</code></span></span><span id='variant.InternalError' class='variant'><span id='InternalError.v' class='invisible'><code>InternalError</code></span></span><span id='variant.BadValue' class='variant'><span id='BadValue.v' class='invisible'><code>BadValue</code></span></span><span id='variant.OBSOLETE_DuplicateKey' class='variant'><span id='OBSOLETE_DuplicateKey.v' class='invisible'><code>OBSOLETE_DuplicateKey</code></span></span><span id='variant.NoSuchKey' class='variant'><span id='NoSuchKey.v' class='invisible'><code>NoSuchKey</code></span></span><span id='variant.GraphContainsCycle' class='variant'><span id='GraphContainsCycle.v' class='invisible'><code>GraphContainsCycle</code></span></span><span id='variant.HostUnreachable' class='variant'><span id='HostUnreachable.v' class='invisible'><code>HostUnreachable</code></span></span><span id='variant.HostNotFound' class='variant'><span id='HostNotFound.v' class='invisible'><code>HostNotFound</code></span></span><span id='variant.UnknownError' class='variant'><span id='UnknownError.v' class='invisible'><code>UnknownError</code></span></span><span id='variant.FailedToParse' class='variant'><span id='FailedToParse.v' class='invisible'><code>FailedToParse</code></span></span><span id='variant.CannotMutateObject' class='variant'><span id='CannotMutateObject.v' class='invisible'><code>CannotMutateObject</code></span></span><span id='variant.UserNotFound' class='variant'><span id='UserNotFound.v' class='invisible'><code>UserNotFound</code></span></span><span id='variant.UnsupportedFormat' class='variant'><span id='UnsupportedFormat.v' class='invisible'><code>UnsupportedFormat</code></span></span><span id='variant.Unauthorized' class='variant'><span id='Unauthorized.v' class='invisible'><code>Unauthorized</code></span></span><span id='variant.TypeMismatch' class='variant'><span id='TypeMismatch.v' class='invisible'><code>TypeMismatch</code></span></span><span id='variant.Overflow' class='variant'><span id='Overflow.v' class='invisible'><code>Overflow</code></span></span><span id='variant.InvalidLength' class='variant'><span id='InvalidLength.v' class='invisible'><code>InvalidLength</code></span></span><span id='variant.ProtocolError' class='variant'><span id='ProtocolError.v' class='invisible'><code>ProtocolError</code></span></span><span id='variant.AuthenticationFailed' class='variant'><span id='AuthenticationFailed.v' class='invisible'><code>AuthenticationFailed</code></span></span><span id='variant.CannotReuseObject' class='variant'><span id='CannotReuseObject.v' class='invisible'><code>CannotReuseObject</code></span></span><span id='variant.IllegalOperation' class='variant'><span id='IllegalOperation.v' class='invisible'><code>IllegalOperation</code></span></span><span id='variant.EmptyArrayOperation' class='variant'><span id='EmptyArrayOperation.v' class='invisible'><code>EmptyArrayOperation</code></span></span><span id='variant.InvalidBSON' class='variant'><span id='InvalidBSON.v' class='invisible'><code>InvalidBSON</code></span></span><span id='variant.AlreadyInitialized' class='variant'><span id='AlreadyInitialized.v' class='invisible'><code>AlreadyInitialized</code></span></span><span id='variant.LockTimeout' class='variant'><span id='LockTimeout.v' class='invisible'><code>LockTimeout</code></span></span><span id='variant.RemoteValidationError' class='variant'><span id='RemoteValidationError.v' class='invisible'><code>RemoteValidationError</code></span></span><span id='variant.NamespaceNotFound' class='variant'><span id='NamespaceNotFound.v' class='invisible'><code>NamespaceNotFound</code></span></span><span id='variant.IndexNotFound' class='variant'><span id='IndexNotFound.v' class='invisible'><code>IndexNotFound</code></span></span><span id='variant.PathNotViable' class='variant'><span id='PathNotViable.v' class='invisible'><code>PathNotViable</code></span></span><span id='variant.NonExistentPath' class='variant'><span id='NonExistentPath.v' class='invisible'><code>NonExistentPath</code></span></span><span id='variant.InvalidPath' class='variant'><span id='InvalidPath.v' class='invisible'><code>InvalidPath</code></span></span><span id='variant.RoleNotFound' class='variant'><span id='RoleNotFound.v' class='invisible'><code>RoleNotFound</code></span></span><span id='variant.RolesNotRelated' class='variant'><span id='RolesNotRelated.v' class='invisible'><code>RolesNotRelated</code></span></span><span id='variant.PrivilegeNotFound' class='variant'><span id='PrivilegeNotFound.v' class='invisible'><code>PrivilegeNotFound</code></span></span><span id='variant.CannotBackfillArray' class='variant'><span id='CannotBackfillArray.v' class='invisible'><code>CannotBackfillArray</code></span></span><span id='variant.UserModificationFailed' class='variant'><span id='UserModificationFailed.v' class='invisible'><code>UserModificationFailed</code></span></span><span id='variant.RemoteChangeDetected' class='variant'><span id='RemoteChangeDetected.v' class='invisible'><code>RemoteChangeDetected</code></span></span><span id='variant.FileRenameFailed' class='variant'><span id='FileRenameFailed.v' class='invisible'><code>FileRenameFailed</code></span></span><span id='variant.FileNotOpen' class='variant'><span id='FileNotOpen.v' class='invisible'><code>FileNotOpen</code></span></span><span id='variant.FileStreamFailed' class='variant'><span id='FileStreamFailed.v' class='invisible'><code>FileStreamFailed</code></span></span><span id='variant.ConflictingUpdateOperators' class='variant'><span id='ConflictingUpdateOperators.v' class='invisible'><code>ConflictingUpdateOperators</code></span></span><span id='variant.FileAlreadyOpen' class='variant'><span id='FileAlreadyOpen.v' class='invisible'><code>FileAlreadyOpen</code></span></span><span id='variant.LogWriteFailed' class='variant'><span id='LogWriteFailed.v' class='invisible'><code>LogWriteFailed</code></span></span><span id='variant.CursorNotFound' class='variant'><span id='CursorNotFound.v' class='invisible'><code>CursorNotFound</code></span></span><span id='variant.UserDataInconsistent' class='variant'><span id='UserDataInconsistent.v' class='invisible'><code>UserDataInconsistent</code></span></span><span id='variant.LockBusy' class='variant'><span id='LockBusy.v' class='invisible'><code>LockBusy</code></span></span><span id='variant.NoMatchingDocument' class='variant'><span id='NoMatchingDocument.v' class='invisible'><code>NoMatchingDocument</code></span></span><span id='variant.NamespaceExists' class='variant'><span id='NamespaceExists.v' class='invisible'><code>NamespaceExists</code></span></span><span id='variant.InvalidRoleModification' class='variant'><span id='InvalidRoleModification.v' class='invisible'><code>InvalidRoleModification</code></span></span><span id='variant.ExceededTimeLimit' class='variant'><span id='ExceededTimeLimit.v' class='invisible'><code>ExceededTimeLimit</code></span></span><span id='variant.ManualInterventionRequired' class='variant'><span id='ManualInterventionRequired.v' class='invisible'><code>ManualInterventionRequired</code></span></span><span id='variant.DollarPrefixedFieldName' class='variant'><span id='DollarPrefixedFieldName.v' class='invisible'><code>DollarPrefixedFieldName</code></span></span><span id='variant.InvalidIdField' class='variant'><span id='InvalidIdField.v' class='invisible'><code>InvalidIdField</code></span></span><span id='variant.NotSingleValueField' class='variant'><span id='NotSingleValueField.v' class='invisible'><code>NotSingleValueField</code></span></span><span id='variant.InvalidDBRef' class='variant'><span id='InvalidDBRef.v' class='invisible'><code>InvalidDBRef</code></span></span><span id='variant.EmptyFieldName' class='variant'><span id='EmptyFieldName.v' class='invisible'><code>EmptyFieldName</code></span></span><span id='variant.DottedFieldName' class='variant'><span id='DottedFieldName.v' class='invisible'><code>DottedFieldName</code></span></span><span id='variant.RoleModificationFailed' class='variant'><span id='RoleModificationFailed.v' class='invisible'><code>RoleModificationFailed</code></span></span><span id='variant.CommandNotFound' class='variant'><span id='CommandNotFound.v' class='invisible'><code>CommandNotFound</code></span></span><span id='variant.DatabaseNotFound' class='variant'><span id='DatabaseNotFound.v' class='invisible'><code>DatabaseNotFound</code></span></span><span id='variant.ShardKeyNotFound' class='variant'><span id='ShardKeyNotFound.v' class='invisible'><code>ShardKeyNotFound</code></span></span><span id='variant.OplogOperationUnsupported' class='variant'><span id='OplogOperationUnsupported.v' class='invisible'><code>OplogOperationUnsupported</code></span></span><span id='variant.StaleShardVersion' class='variant'><span id='StaleShardVersion.v' class='invisible'><code>StaleShardVersion</code></span></span><span id='variant.WriteConcernFailed' class='variant'><span id='WriteConcernFailed.v' class='invisible'><code>WriteConcernFailed</code></span></span><span id='variant.MultipleErrorsOccurred' class='variant'><span id='MultipleErrorsOccurred.v' class='invisible'><code>MultipleErrorsOccurred</code></span></span><span id='variant.ImmutableField' class='variant'><span id='ImmutableField.v' class='invisible'><code>ImmutableField</code></span></span><span id='variant.CannotCreateIndex' class='variant'><span id='CannotCreateIndex.v' class='invisible'><code>CannotCreateIndex</code></span></span><span id='variant.IndexAlreadyExists' class='variant'><span id='IndexAlreadyExists.v' class='invisible'><code>IndexAlreadyExists</code></span></span><span id='variant.AuthSchemaIncompatible' class='variant'><span id='AuthSchemaIncompatible.v' class='invisible'><code>AuthSchemaIncompatible</code></span></span><span id='variant.ShardNotFound' class='variant'><span id='ShardNotFound.v' class='invisible'><code>ShardNotFound</code></span></span><span id='variant.ReplicaSetNotFound' class='variant'><span id='ReplicaSetNotFound.v' class='invisible'><code>ReplicaSetNotFound</code></span></span><span id='variant.InvalidOptions' class='variant'><span id='InvalidOptions.v' class='invisible'><code>InvalidOptions</code></span></span><span id='variant.InvalidNamespace' class='variant'><span id='InvalidNamespace.v' class='invisible'><code>InvalidNamespace</code></span></span><span id='variant.NodeNotFound' class='variant'><span id='NodeNotFound.v' class='invisible'><code>NodeNotFound</code></span></span><span id='variant.WriteConcernLegacyOK' class='variant'><span id='WriteConcernLegacyOK.v' class='invisible'><code>WriteConcernLegacyOK</code></span></span><span id='variant.NoReplicationEnabled' class='variant'><span id='NoReplicationEnabled.v' class='invisible'><code>NoReplicationEnabled</code></span></span><span id='variant.OperationIncomplete' class='variant'><span id='OperationIncomplete.v' class='invisible'><code>OperationIncomplete</code></span></span><span id='variant.CommandResultSchemaViolation' class='variant'><span id='CommandResultSchemaViolation.v' class='invisible'><code>CommandResultSchemaViolation</code></span></span><span id='variant.UnknownReplWriteConcern' class='variant'><span id='UnknownReplWriteConcern.v' class='invisible'><code>UnknownReplWriteConcern</code></span></span><span id='variant.RoleDataInconsistent' class='variant'><span id='RoleDataInconsistent.v' class='invisible'><code>RoleDataInconsistent</code></span></span><span id='variant.NoWhereParseContext' class='variant'><span id='NoWhereParseContext.v' class='invisible'><code>NoWhereParseContext</code></span></span><span id='variant.NoProgressMade' class='variant'><span id='NoProgressMade.v' class='invisible'><code>NoProgressMade</code></span></span><span id='variant.RemoteResultsUnavailable' class='variant'><span id='RemoteResultsUnavailable.v' class='invisible'><code>RemoteResultsUnavailable</code></span></span><span id='variant.DuplicateKeyValue' class='variant'><span id='DuplicateKeyValue.v' class='invisible'><code>DuplicateKeyValue</code></span></span><span id='variant.IndexOptionsConflict' class='variant'><span id='IndexOptionsConflict.v' class='invisible'><code>IndexOptionsConflict</code></span></span><span id='variant.IndexKeySpecsConflict' class='variant'><span id='IndexKeySpecsConflict.v' class='invisible'><code>IndexKeySpecsConflict</code></span></span><span id='variant.CannotSplit' class='variant'><span id='CannotSplit.v' class='invisible'><code>CannotSplit</code></span></span><span id='variant.SplitFailed' class='variant'><span id='SplitFailed.v' class='invisible'><code>SplitFailed</code></span></span><span id='variant.NetworkTimeout' class='variant'><span id='NetworkTimeout.v' class='invisible'><code>NetworkTimeout</code></span></span><span id='variant.CallbackCanceled' class='variant'><span id='CallbackCanceled.v' class='invisible'><code>CallbackCanceled</code></span></span><span id='variant.ShutdownInProgress' class='variant'><span id='ShutdownInProgress.v' class='invisible'><code>ShutdownInProgress</code></span></span><span id='variant.SecondaryAheadOfPrimary' class='variant'><span id='SecondaryAheadOfPrimary.v' class='invisible'><code>SecondaryAheadOfPrimary</code></span></span><span id='variant.InvalidReplicaSetConfig' class='variant'><span id='InvalidReplicaSetConfig.v' class='invisible'><code>InvalidReplicaSetConfig</code></span></span><span id='variant.NotYetInitialized' class='variant'><span id='NotYetInitialized.v' class='invisible'><code>NotYetInitialized</code></span></span><span id='variant.NotSecondary' class='variant'><span id='NotSecondary.v' class='invisible'><code>NotSecondary</code></span></span><span id='variant.OperationFailed' class='variant'><span id='OperationFailed.v' class='invisible'><code>OperationFailed</code></span></span><span id='variant.NoProjectionFound' class='variant'><span id='NoProjectionFound.v' class='invisible'><code>NoProjectionFound</code></span></span><span id='variant.DBPathInUse' class='variant'><span id='DBPathInUse.v' class='invisible'><code>DBPathInUse</code></span></span><span id='variant.WriteConcernNotDefined' class='variant'><span id='WriteConcernNotDefined.v' class='invisible'><code>WriteConcernNotDefined</code></span></span><span id='variant.CannotSatisfyWriteConcern' class='variant'><span id='CannotSatisfyWriteConcern.v' class='invisible'><code>CannotSatisfyWriteConcern</code></span></span><span id='variant.OutdatedClient' class='variant'><span id='OutdatedClient.v' class='invisible'><code>OutdatedClient</code></span></span><span id='variant.IncompatibleAuditMetadata' class='variant'><span id='IncompatibleAuditMetadata.v' class='invisible'><code>IncompatibleAuditMetadata</code></span></span><span id='variant.NewReplicaSetConfigurationIncompatible' class='variant'><span id='NewReplicaSetConfigurationIncompatible.v' class='invisible'><code>NewReplicaSetConfigurationIncompatible</code></span></span><span id='variant.NodeNotElectable' class='variant'><span id='NodeNotElectable.v' class='invisible'><code>NodeNotElectable</code></span></span><span id='variant.IncompatibleShardingMetadata' class='variant'><span id='IncompatibleShardingMetadata.v' class='invisible'><code>IncompatibleShardingMetadata</code></span></span><span id='variant.DistributedClockSkewed' class='variant'><span id='DistributedClockSkewed.v' class='invisible'><code>DistributedClockSkewed</code></span></span><span id='variant.LockFailed' class='variant'><span id='LockFailed.v' class='invisible'><code>LockFailed</code></span></span><span id='variant.InconsistentReplicaSetNames' class='variant'><span id='InconsistentReplicaSetNames.v' class='invisible'><code>InconsistentReplicaSetNames</code></span></span><span id='variant.ConfigurationInProgress' class='variant'><span id='ConfigurationInProgress.v' class='invisible'><code>ConfigurationInProgress</code></span></span><span id='variant.CannotInitializeNodeWithData' class='variant'><span id='CannotInitializeNodeWithData.v' class='invisible'><code>CannotInitializeNodeWithData</code></span></span><span id='variant.NotExactValueField' class='variant'><span id='NotExactValueField.v' class='invisible'><code>NotExactValueField</code></span></span><span id='variant.WriteConflict' class='variant'><span id='WriteConflict.v' class='invisible'><code>WriteConflict</code></span></span><span id='variant.InitialSyncFailure' class='variant'><span id='InitialSyncFailure.v' class='invisible'><code>InitialSyncFailure</code></span></span><span id='variant.InitialSyncOplogSourceMissing' class='variant'><span id='InitialSyncOplogSourceMissing.v' class='invisible'><code>InitialSyncOplogSourceMissing</code></span></span><span id='variant.CommandNotSupported' class='variant'><span id='CommandNotSupported.v' class='invisible'><code>CommandNotSupported</code></span></span><span id='variant.DocTooLargeForCapped' class='variant'><span id='DocTooLargeForCapped.v' class='invisible'><code>DocTooLargeForCapped</code></span></span><span id='variant.ConflictingOperationInProgress' class='variant'><span id='ConflictingOperationInProgress.v' class='invisible'><code>ConflictingOperationInProgress</code></span></span><span id='variant.NamespaceNotSharded' class='variant'><span id='NamespaceNotSharded.v' class='invisible'><code>NamespaceNotSharded</code></span></span><span id='variant.InvalidSyncSource' class='variant'><span id='InvalidSyncSource.v' class='invisible'><code>InvalidSyncSource</code></span></span><span id='variant.OplogStartMissing' class='variant'><span id='OplogStartMissing.v' class='invisible'><code>OplogStartMissing</code></span></span><span id='variant.DocumentValidationFailure' class='variant'><span id='DocumentValidationFailure.v' class='invisible'><code>DocumentValidationFailure</code></span></span><span id='variant.OBSOLETE_ReadAfterOptimeTimeout' class='variant'><span id='OBSOLETE_ReadAfterOptimeTimeout.v' class='invisible'><code>OBSOLETE_ReadAfterOptimeTimeout</code></span></span><span id='variant.NotAReplicaSet' class='variant'><span id='NotAReplicaSet.v' class='invisible'><code>NotAReplicaSet</code></span></span><span id='variant.IncompatibleElectionProtocol' class='variant'><span id='IncompatibleElectionProtocol.v' class='invisible'><code>IncompatibleElectionProtocol</code></span></span><span id='variant.CommandFailed' class='variant'><span id='CommandFailed.v' class='invisible'><code>CommandFailed</code></span></span><span id='variant.RPCProtocolNegotiationFailed' class='variant'><span id='RPCProtocolNegotiationFailed.v' class='invisible'><code>RPCProtocolNegotiationFailed</code></span></span><span id='variant.UnrecoverableRollbackError' class='variant'><span id='UnrecoverableRollbackError.v' class='invisible'><code>UnrecoverableRollbackError</code></span></span><span id='variant.LockNotFound' class='variant'><span id='LockNotFound.v' class='invisible'><code>LockNotFound</code></span></span><span id='variant.LockStateChangeFailed' class='variant'><span id='LockStateChangeFailed.v' class='invisible'><code>LockStateChangeFailed</code></span></span><span id='variant.SymbolNotFound' class='variant'><span id='SymbolNotFound.v' class='invisible'><code>SymbolNotFound</code></span></span><span id='variant.RLPInitializationFailed' class='variant'><span id='RLPInitializationFailed.v' class='invisible'><code>RLPInitializationFailed</code></span></span><span id='variant.ConfigServersInconsistent' class='variant'><span id='ConfigServersInconsistent.v' class='invisible'><code>ConfigServersInconsistent</code></span></span><span id='variant.FailedToSatisfyReadPreference' class='variant'><span id='FailedToSatisfyReadPreference.v' class='invisible'><code>FailedToSatisfyReadPreference</code></span></span><span id='variant.XXX_TEMP_NAME_ReadCommittedCurrentlyUnavailable' class='variant'><span id='XXX_TEMP_NAME_ReadCommittedCurrentlyUnavailable.v' class='invisible'><code>XXX_TEMP_NAME_ReadCommittedCurrentlyUnavailable</code></span></span><span id='variant.StaleTerm' class='variant'><span id='StaleTerm.v' class='invisible'><code>StaleTerm</code></span></span><span id='variant.CappedPositionLost' class='variant'><span id='CappedPositionLost.v' class='invisible'><code>CappedPositionLost</code></span></span><span id='variant.IncompatibleShardingConfigVersion' class='variant'><span id='IncompatibleShardingConfigVersion.v' class='invisible'><code>IncompatibleShardingConfigVersion</code></span></span><span id='variant.RemoteOplogStale' class='variant'><span id='RemoteOplogStale.v' class='invisible'><code>RemoteOplogStale</code></span></span><span id='variant.JSInterpreterFailure' class='variant'><span id='JSInterpreterFailure.v' class='invisible'><code>JSInterpreterFailure</code></span></span><span id='variant.NotMaster' class='variant'><span id='NotMaster.v' class='invisible'><code>NotMaster</code></span></span><span id='variant.DuplicateKey' class='variant'><span id='DuplicateKey.v' class='invisible'><code>DuplicateKey</code></span></span><span id='variant.InterruptedAtShutdown' class='variant'><span id='InterruptedAtShutdown.v' class='invisible'><code>InterruptedAtShutdown</code></span></span><span id='variant.Interrupted' class='variant'><span id='Interrupted.v' class='invisible'><code>Interrupted</code></span></span><span id='variant.BackgroundOperationInProgressForDatabase' class='variant'><span id='BackgroundOperationInProgressForDatabase.v' class='invisible'><code>BackgroundOperationInProgressForDatabase</code></span></span><span id='variant.BackgroundOperationInProgressForNamespace' class='variant'><span id='BackgroundOperationInProgressForNamespace.v' class='invisible'><code>BackgroundOperationInProgressForNamespace</code></span></span><span id='variant.PrepareConfigsFailedCode' class='variant'><span id='PrepareConfigsFailedCode.v' class='invisible'><code>PrepareConfigsFailedCode</code></span></span><span id='variant.DatabaseDifferCase' class='variant'><span id='DatabaseDifferCase.v' class='invisible'><code>DatabaseDifferCase</code></span></span><span id='variant.ShardKeyTooBig' class='variant'><span id='ShardKeyTooBig.v' class='invisible'><code>ShardKeyTooBig</code></span></span><span id='variant.SendStaleConfig' class='variant'><span id='SendStaleConfig.v' class='invisible'><code>SendStaleConfig</code></span></span><span id='variant.NotMasterNoSlaveOkCode' class='variant'><span id='NotMasterNoSlaveOkCode.v' class='invisible'><code>NotMasterNoSlaveOkCode</code></span></span><span id='variant.NotMasterOrSecondaryCode' class='variant'><span id='NotMasterOrSecondaryCode.v' class='invisible'><code>NotMasterOrSecondaryCode</code></span></span><span id='variant.OutOfDiskSpace' class='variant'><span id='OutOfDiskSpace.v' class='invisible'><code>OutOfDiskSpace</code></span></span><span id='variant.KeyTooLong' class='variant'><span id='KeyTooLong.v' class='invisible'><code>KeyTooLong</code></span></span><span id='variant.MaxError' class='variant'><span id='MaxError.v' class='invisible'><code>MaxError</code></span></span><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='enum' href='../../mongodb/error/enum.ErrorCode.html' title='mongodb::error::ErrorCode'>ErrorCode</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1443' class='srclink' href='../../src/mongodb/error.rs.html#396-570' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.is_network_error' class='method'><span id='is_network_error.v' class='invisible'><code>fn <a href='#method.is_network_error' class='fnname'>is_network_error</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<h4 id='method.is_interruption' class='method'><span id='is_interruption.v' class='invisible'><code>fn <a href='#method.is_interruption' class='fnname'>is_interruption</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<h4 id='method.is_index_creation_error' class='method'><span id='is_index_creation_error.v' class='invisible'><code>fn <a href='#method.is_index_creation_error' class='fnname'>is_index_creation_error</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../mongodb/error/enum.ErrorCode.html' title='mongodb::error::ErrorCode'>ErrorCode</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-4255' class='srclink' href='../../src/mongodb/error.rs.html#238' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../../mongodb/error/enum.ErrorCode.html' title='mongodb::error::ErrorCode'>ErrorCode</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-4413' class='srclink' href='../../src/mongodb/error.rs.html#238' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class='method'><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../mongodb/error/enum.ErrorCode.html' title='mongodb::error::ErrorCode'>ErrorCode</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class='method'><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='enum' href='../../mongodb/error/enum.ErrorCode.html' title='mongodb::error::ErrorCode'>ErrorCode</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-4419' class='srclink' href='../../src/mongodb/error.rs.html#238' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> for <a class='enum' href='../../mongodb/error/enum.ErrorCode.html' title='mongodb::error::ErrorCode'>ErrorCode</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1452' class='srclink' href='../../src/mongodb/error.rs.html#572-576' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt-1' class='method'><span id='fmt.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, fmt: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "mongodb";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

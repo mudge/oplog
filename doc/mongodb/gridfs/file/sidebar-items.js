@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["DEFAULT_CHUNK_SIZE",""],["MEGABYTE",""]],"enum":[["Mode","File modes."]],"struct":[["File","A writable or readable file stream within GridFS."],["GfsFile","A one-to-one representation of a file document within GridFS."]]});

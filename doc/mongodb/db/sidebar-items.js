@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["options","Options for database-level commands."],["roles","Role-based database and command authorization."]],"struct":[["DatabaseInner","Interfaces with a MongoDB database."]],"trait":[["ThreadedDatabase",""]],"type":[["Database",""]]});

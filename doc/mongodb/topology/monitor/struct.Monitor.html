@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Monitor` struct in crate `mongodb`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Monitor">
+
+    <title>mongodb::topology::monitor::Monitor - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../../index.html'>mongodb</a>::<wbr><a href='../index.html'>topology</a>::<wbr><a href='index.html'>monitor</a></p><script>window.sidebarCurrent = {name: 'Monitor', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>mongodb</a>::<wbr><a href='../index.html'>topology</a>::<wbr><a href='index.html'>monitor</a>::<wbr><a class='struct' href=''>Monitor</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-1895' class='srclink' href='../../../src/mongodb/topology/monitor.rs.html#60-83' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Monitor {
+    pub running: <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/arc/struct.Arc.html' title='alloc::arc::Arc'>Arc</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/core/sync/atomic/struct.AtomicBool.html' title='core::sync::atomic::AtomicBool'>AtomicBool</a>&gt;,
+    // some fields omitted
+}</pre><div class='docblock'><p>Monitors and updates server and topology information.</p>
+</div><h2 class='fields'>Fields</h2><span id='structfield.running' class='structfield'>
+                           <span id='running.v' class='invisible'>
+                           <code>running: <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/arc/struct.Arc.html' title='alloc::arc::Arc'>Arc</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/core/sync/atomic/struct.AtomicBool.html' title='core::sync::atomic::AtomicBool'>AtomicBool</a>&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>While true, the monitor will check server connection health
+at the topology&#39;s heartbeat frequency rate.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../../mongodb/topology/monitor/struct.Monitor.html' title='mongodb::topology::monitor::Monitor'>Monitor</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1946' class='srclink' href='../../../src/mongodb/topology/monitor.rs.html#220-388' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(client: <a class='type' href='../../../mongodb/type.Client.html' title='mongodb::Client'>Client</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; host: <a class='struct' href='../../../mongodb/connstring/struct.Host.html' title='mongodb::connstring::Host'>Host</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pool: <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/arc/struct.Arc.html' title='alloc::arc::Arc'>Arc</a>&lt;<a class='struct' href='../../../mongodb/pool/struct.ConnectionPool.html' title='mongodb::pool::ConnectionPool'>ConnectionPool</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; top_description: <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/arc/struct.Arc.html' title='alloc::arc::Arc'>Arc</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/sync/rwlock/struct.RwLock.html' title='std::sync::rwlock::RwLock'>RwLock</a>&lt;<a class='struct' href='../../../mongodb/topology/struct.TopologyDescription.html' title='mongodb::topology::TopologyDescription'>TopologyDescription</a>&gt;&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; server_description: <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/arc/struct.Arc.html' title='alloc::arc::Arc'>Arc</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/sync/rwlock/struct.RwLock.html' title='std::sync::rwlock::RwLock'>RwLock</a>&lt;<a class='struct' href='../../../mongodb/topology/server/struct.ServerDescription.html' title='mongodb::topology::server::ServerDescription'>ServerDescription</a>&gt;&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='struct' href='../../../mongodb/topology/monitor/struct.Monitor.html' title='mongodb::topology::monitor::Monitor'>Monitor</a></code></span></h4>
+<div class='docblock'><p>Returns a new monitor connected to the server.</p>
+</div><h4 id='method.is_master' class='method'><span id='is_master.v' class='invisible'><code>fn <a href='#method.is_master' class='fnname'>is_master</a>(&amp;self) -&gt; <a class='type' href='../../../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='struct' href='../../../mongodb/cursor/struct.Cursor.html' title='mongodb::cursor::Cursor'>Cursor</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>&gt;</code></span></h4>
+<div class='docblock'><p>Returns an isMaster server response using an owned monitor socket.</p>
+</div><h4 id='method.request_update' class='method'><span id='request_update.v' class='invisible'><code>fn <a href='#method.request_update' class='fnname'>request_update</a>(&amp;self)</code></span></h4>
+<h4 id='method.run' class='method'><span id='run.v' class='invisible'><code>fn <a href='#method.run' class='fnname'>run</a>(&amp;self)</code></span></h4>
+<div class='docblock'><p>Starts server monitoring.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "mongodb";
+    </script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

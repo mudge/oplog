@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `spec` mod in crate `bson`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, spec">
+
+    <title>bson::spec - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>bson</a></p><script>window.sidebarCurrent = {name: 'spec', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>bson</a>::<wbr><a class='mod' href=''>spec</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-180' class='srclink' href='../../src/bson/spec.rs.html#22-157' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Constants derived from the <a href="http://bsonspec.org/spec.html">BSON Specification Version 1.0</a>.</p>
+</div><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.BinarySubtype.html'
+                                  title='bson::spec::BinarySubtype'>BinarySubtype</a></td>
+                           <td class='docblock-short'>
+                                <p>The available binary subtypes, plus a user-defined slot.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.ElementType.html'
+                                  title='bson::spec::ElementType'>ElementType</a></td>
+                           <td class='docblock-short'>
+                                <p>All available BSON element types.</p>
+                           </td>
+                       </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BINARY_SUBTYPE_BINARY_OLD.html'
+                                  title='bson::spec::BINARY_SUBTYPE_BINARY_OLD'>BINARY_SUBTYPE_BINARY_OLD</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BINARY_SUBTYPE_FUNCTION.html'
+                                  title='bson::spec::BINARY_SUBTYPE_FUNCTION'>BINARY_SUBTYPE_FUNCTION</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BINARY_SUBTYPE_GENERIC.html'
+                                  title='bson::spec::BINARY_SUBTYPE_GENERIC'>BINARY_SUBTYPE_GENERIC</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BINARY_SUBTYPE_MD5.html'
+                                  title='bson::spec::BINARY_SUBTYPE_MD5'>BINARY_SUBTYPE_MD5</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BINARY_SUBTYPE_UUID.html'
+                                  title='bson::spec::BINARY_SUBTYPE_UUID'>BINARY_SUBTYPE_UUID</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BINARY_SUBTYPE_UUID_OLD.html'
+                                  title='bson::spec::BINARY_SUBTYPE_UUID_OLD'>BINARY_SUBTYPE_UUID_OLD</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_32BIT_INTEGER.html'
+                                  title='bson::spec::ELEMENT_TYPE_32BIT_INTEGER'>ELEMENT_TYPE_32BIT_INTEGER</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_64BIT_INTEGER.html'
+                                  title='bson::spec::ELEMENT_TYPE_64BIT_INTEGER'>ELEMENT_TYPE_64BIT_INTEGER</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_ARRAY.html'
+                                  title='bson::spec::ELEMENT_TYPE_ARRAY'>ELEMENT_TYPE_ARRAY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_BINARY.html'
+                                  title='bson::spec::ELEMENT_TYPE_BINARY'>ELEMENT_TYPE_BINARY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_BOOLEAN.html'
+                                  title='bson::spec::ELEMENT_TYPE_BOOLEAN'>ELEMENT_TYPE_BOOLEAN</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_DBPOINTER.html'
+                                  title='bson::spec::ELEMENT_TYPE_DBPOINTER'>ELEMENT_TYPE_DBPOINTER</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_EMBEDDED_DOCUMENT.html'
+                                  title='bson::spec::ELEMENT_TYPE_EMBEDDED_DOCUMENT'>ELEMENT_TYPE_EMBEDDED_DOCUMENT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_FLOATING_POINT.html'
+                                  title='bson::spec::ELEMENT_TYPE_FLOATING_POINT'>ELEMENT_TYPE_FLOATING_POINT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_JAVASCRIPT_CODE.html'
+                                  title='bson::spec::ELEMENT_TYPE_JAVASCRIPT_CODE'>ELEMENT_TYPE_JAVASCRIPT_CODE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_JAVASCRIPT_CODE_WITH_SCOPE.html'
+                                  title='bson::spec::ELEMENT_TYPE_JAVASCRIPT_CODE_WITH_SCOPE'>ELEMENT_TYPE_JAVASCRIPT_CODE_WITH_SCOPE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_MAXKEY.html'
+                                  title='bson::spec::ELEMENT_TYPE_MAXKEY'>ELEMENT_TYPE_MAXKEY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_MINKEY.html'
+                                  title='bson::spec::ELEMENT_TYPE_MINKEY'>ELEMENT_TYPE_MINKEY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_NULL_VALUE.html'
+                                  title='bson::spec::ELEMENT_TYPE_NULL_VALUE'>ELEMENT_TYPE_NULL_VALUE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_OBJECT_ID.html'
+                                  title='bson::spec::ELEMENT_TYPE_OBJECT_ID'>ELEMENT_TYPE_OBJECT_ID</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_REGULAR_EXPRESSION.html'
+                                  title='bson::spec::ELEMENT_TYPE_REGULAR_EXPRESSION'>ELEMENT_TYPE_REGULAR_EXPRESSION</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_SYMBOL.html'
+                                  title='bson::spec::ELEMENT_TYPE_SYMBOL'>ELEMENT_TYPE_SYMBOL</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_TIMESTAMP.html'
+                                  title='bson::spec::ELEMENT_TYPE_TIMESTAMP'>ELEMENT_TYPE_TIMESTAMP</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_UNDEFINED.html'
+                                  title='bson::spec::ELEMENT_TYPE_UNDEFINED'>ELEMENT_TYPE_UNDEFINED</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_UTC_DATETIME.html'
+                                  title='bson::spec::ELEMENT_TYPE_UTC_DATETIME'>ELEMENT_TYPE_UTC_DATETIME</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELEMENT_TYPE_UTF8_STRING.html'
+                                  title='bson::spec::ELEMENT_TYPE_UTF8_STRING'>ELEMENT_TYPE_UTF8_STRING</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "bson";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

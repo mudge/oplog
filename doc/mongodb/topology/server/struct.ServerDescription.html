@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ServerDescription` struct in crate `mongodb`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ServerDescription">
+
+    <title>mongodb::topology::server::ServerDescription - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../../index.html'>mongodb</a>::<wbr><a href='../index.html'>topology</a>::<wbr><a href='index.html'>server</a></p><script>window.sidebarCurrent = {name: 'ServerDescription', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>mongodb</a>::<wbr><a href='../index.html'>topology</a>::<wbr><a href='index.html'>server</a>::<wbr><a class='struct' href=''>ServerDescription</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-4609' class='srclink' href='../../../src/mongodb/topology/server.rs.html#47-76' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct ServerDescription {
+    pub server_type: <a class='enum' href='../../../mongodb/topology/server/enum.ServerType.html' title='mongodb::topology::server::ServerType'>ServerType</a>,
+    pub err: <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/arc/struct.Arc.html' title='alloc::arc::Arc'>Arc</a>&lt;<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a>&gt;&gt;,
+    pub round_trip_time: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>&gt;,
+    pub min_wire_version: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>,
+    pub max_wire_version: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>,
+    pub me: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../../mongodb/connstring/struct.Host.html' title='mongodb::connstring::Host'>Host</a>&gt;,
+    pub hosts: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../../mongodb/connstring/struct.Host.html' title='mongodb::connstring::Host'>Host</a>&gt;,
+    pub passives: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../../mongodb/connstring/struct.Host.html' title='mongodb::connstring::Host'>Host</a>&gt;,
+    pub arbiters: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../../mongodb/connstring/struct.Host.html' title='mongodb::connstring::Host'>Host</a>&gt;,
+    pub tags: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/btree/map/struct.BTreeMap.html' title='collections::btree::map::BTreeMap'>BTreeMap</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub set_name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
+    pub election_id: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../../bson/oid/struct.ObjectId.html' title='bson::oid::ObjectId'>ObjectId</a>&gt;,
+    pub primary: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../../mongodb/connstring/struct.Host.html' title='mongodb::connstring::Host'>Host</a>&gt;,
+    pub set_version: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>&gt;,
+}</pre><div class='docblock'><p>Server information gathered from server monitoring.</p>
+</div><h2 class='fields'>Fields</h2><span id='structfield.server_type' class='structfield'>
+                           <span id='server_type.v' class='invisible'>
+                           <code>server_type: <a class='enum' href='../../../mongodb/topology/server/enum.ServerType.html' title='mongodb::topology::server::ServerType'>ServerType</a></code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The server type.</p>
+</div><span id='structfield.err' class='structfield'>
+                           <span id='err.v' class='invisible'>
+                           <code>err: <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/arc/struct.Arc.html' title='alloc::arc::Arc'>Arc</a>&lt;<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a>&gt;&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>Any error encountered while monitoring this server.</p>
+</div><span id='structfield.round_trip_time' class='structfield'>
+                           <span id='round_trip_time.v' class='invisible'>
+                           <code>round_trip_time: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The average round-trip time over the last 5 monitoring checks.</p>
+</div><span id='structfield.min_wire_version' class='structfield'>
+                           <span id='min_wire_version.v' class='invisible'>
+                           <code>min_wire_version: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a></code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The minimum wire version supported by this server.</p>
+</div><span id='structfield.max_wire_version' class='structfield'>
+                           <span id='max_wire_version.v' class='invisible'>
+                           <code>max_wire_version: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a></code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The maximum wire version supported by this server.</p>
+</div><span id='structfield.me' class='structfield'>
+                           <span id='me.v' class='invisible'>
+                           <code>me: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../../mongodb/connstring/struct.Host.html' title='mongodb::connstring::Host'>Host</a>&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The server&#39;s host information, if it is part of a replica set.</p>
+</div><span id='structfield.hosts' class='structfield'>
+                           <span id='hosts.v' class='invisible'>
+                           <code>hosts: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../../mongodb/connstring/struct.Host.html' title='mongodb::connstring::Host'>Host</a>&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>All hosts in the replica set known by this server.</p>
+</div><span id='structfield.passives' class='structfield'>
+                           <span id='passives.v' class='invisible'>
+                           <code>passives: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../../mongodb/connstring/struct.Host.html' title='mongodb::connstring::Host'>Host</a>&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>All passive members of the replica set known by this server.</p>
+</div><span id='structfield.arbiters' class='structfield'>
+                           <span id='arbiters.v' class='invisible'>
+                           <code>arbiters: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../../mongodb/connstring/struct.Host.html' title='mongodb::connstring::Host'>Host</a>&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>All arbiters in the replica set known by this server.</p>
+</div><span id='structfield.tags' class='structfield'>
+                           <span id='tags.v' class='invisible'>
+                           <code>tags: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/btree/map/struct.BTreeMap.html' title='collections::btree::map::BTreeMap'>BTreeMap</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>Server tags for targeted read operations on specific replica set members.</p>
+</div><span id='structfield.set_name' class='structfield'>
+                           <span id='set_name.v' class='invisible'>
+                           <code>set_name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The replica set name.</p>
+</div><span id='structfield.election_id' class='structfield'>
+                           <span id='election_id.v' class='invisible'>
+                           <code>election_id: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../../bson/oid/struct.ObjectId.html' title='bson::oid::ObjectId'>ObjectId</a>&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The server&#39;s current election id, if it believes it is a primary.</p>
+</div><span id='structfield.primary' class='structfield'>
+                           <span id='primary.v' class='invisible'>
+                           <code>primary: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../../mongodb/connstring/struct.Host.html' title='mongodb::connstring::Host'>Host</a>&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The server&#39;s opinion of who the primary is.</p>
+</div><span id='structfield.set_version' class='structfield'>
+                           <span id='set_version.v' class='invisible'>
+                           <code>set_version: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The current replica set version number.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../../mongodb/topology/server/struct.ServerDescription.html' title='mongodb::topology::server::ServerDescription'>ServerDescription</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1840' class='srclink' href='../../../src/mongodb/topology/server.rs.html#113-196' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../../../mongodb/topology/server/struct.ServerDescription.html' title='mongodb::topology::server::ServerDescription'>ServerDescription</a></code></span></h4>
+<div class='docblock'><p>Returns a default, unknown server description.</p>
+</div><h4 id='method.update' class='method'><span id='update.v' class='invisible'><code>fn <a href='#method.update' class='fnname'>update</a>(&amp;mut self, ismaster: <a class='struct' href='../../../mongodb/topology/monitor/struct.IsMasterResult.html' title='mongodb::topology::monitor::IsMasterResult'>IsMasterResult</a>, round_trip_time: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>)</code></span></h4>
+<h4 id='method.set_err' class='method'><span id='set_err.v' class='invisible'><code>fn <a href='#method.set_err' class='fnname'>set_err</a>(&amp;mut self, err: <a class='enum' href='../../../mongodb/error/enum.Error.html' title='mongodb::error::Error'>Error</a>)</code></span></h4>
+<h4 id='method.clear' class='method'><span id='clear.v' class='invisible'><code>fn <a href='#method.clear' class='fnname'>clear</a>(&amp;mut self)</code></span></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../../mongodb/topology/server/struct.ServerDescription.html' title='mongodb::topology::server::ServerDescription'>ServerDescription</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-4624' class='srclink' href='../../../src/mongodb/topology/server.rs.html#46' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../../mongodb/topology/server/struct.ServerDescription.html' title='mongodb::topology::server::ServerDescription'>ServerDescription</a></code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../../mongodb/topology/server/struct.ServerDescription.html' title='mongodb::topology::server::ServerDescription'>ServerDescription</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-4641' class='srclink' href='../../../src/mongodb/topology/server.rs.html#46' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../../mongodb/topology/server/struct.ServerDescription.html' title='mongodb::topology::server::ServerDescription'>ServerDescription</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1838' class='srclink' href='../../../src/mongodb/topology/server.rs.html#107-111' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.default' class='method'><span id='default.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></span></h4>
+<div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "mongodb";
+    </script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

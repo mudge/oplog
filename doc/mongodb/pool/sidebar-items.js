@@ -1,0 +1,1 @@
+initSidebarItems({"static":[["DEFAULT_POOL_SIZE",""]],"struct":[["ConnectionPool","Handles threaded connections to a MongoDB server."],["PooledStream","Holds an available socket, with logic to return the socket to the connection pool when dropped."]]});

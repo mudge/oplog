@@ -1,0 +1,1 @@
+initSidebarItems({"macro":[["separated_float",""],["separated_int",""],["separated_uint",""]],"mod":[["float",""],["signed_int",""],["unsigned_int",""],["usize",""]],"trait":[["FixedPlaceSeparatable",""],["Separatable","Used for numbers that can be printed with separators for the thousands places."]]});

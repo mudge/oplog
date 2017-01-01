@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["IsMasterResult","The result of an isMaster operation."],["Monitor","Monitors and updates server and topology information."]]});

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `CommandResult` enum in crate `mongodb`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, CommandResult">
+
+    <title>mongodb::CommandResult - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>mongodb</a></p><script>window.sidebarCurrent = {name: 'CommandResult', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>mongodb</a>::<wbr><a class='enum' href=''>CommandResult</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-2527' class='srclink' href='../src/mongodb/apm/event.rs.html#26-41' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum CommandResult&lt;'a&gt; {
+    Success {
+        duration: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+        reply: <a class='type' href='../bson/bson/type.Document.html' title='bson::bson::Document'>Document</a>,
+        command_name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
+        request_id: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>,
+        connection_string: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
+    },
+    Failure {
+        duration: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+        command_name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
+        failure: &amp;'a <a class='enum' href='../mongodb/error/enum.Error.html' title='mongodb::error::Error'>MongoError</a>,
+        request_id: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>,
+        connection_string: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
+    },
+}</pre><div class='docblock'><p>Contains the information about a given command that completed.</p>
+</div><h2 class='variants'>Variants</h2>
+<span id='variant.Success' class='variant'><span id='Success.v' class='invisible'><code>Success</code></span></span><h3 class='fields'>Fields</h3>
+
+                           <table><tr><td id='variant.Success.field.duration'><span id='Success.v.duration.v' class='invisible'><code>duration:&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></span></td><td></td></tr><tr><td id='variant.Success.field.reply'><span id='Success.v.reply.v' class='invisible'><code>reply:&nbsp;<a class='type' href='../bson/bson/type.Document.html' title='bson::bson::Document'>Document</a></code></span></td><td></td></tr><tr><td id='variant.Success.field.command_name'><span id='Success.v.command_name.v' class='invisible'><code>command_name:&nbsp;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></td><td></td></tr><tr><td id='variant.Success.field.request_id'><span id='Success.v.request_id.v' class='invisible'><code>request_id:&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a></code></span></td><td></td></tr><tr><td id='variant.Success.field.connection_string'><span id='Success.v.connection_string.v' class='invisible'><code>connection_string:&nbsp;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></td><td></td></tr></table><span id='variant.Failure' class='variant'><span id='Failure.v' class='invisible'><code>Failure</code></span></span><h3 class='fields'>Fields</h3>
+
+                           <table><tr><td id='variant.Failure.field.duration'><span id='Failure.v.duration.v' class='invisible'><code>duration:&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></span></td><td></td></tr><tr><td id='variant.Failure.field.command_name'><span id='Failure.v.command_name.v' class='invisible'><code>command_name:&nbsp;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></td><td></td></tr><tr><td id='variant.Failure.field.failure'><span id='Failure.v.failure.v' class='invisible'><code>failure:&nbsp;&amp;'a <a class='enum' href='../mongodb/error/enum.Error.html' title='mongodb::error::Error'>MongoError</a></code></span></td><td></td></tr><tr><td id='variant.Failure.field.request_id'><span id='Failure.v.request_id.v' class='invisible'><code>request_id:&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a></code></span></td><td></td></tr><tr><td id='variant.Failure.field.connection_string'><span id='Failure.v.connection_string.v' class='invisible'><code>connection_string:&nbsp;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></td><td></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> for <a class='enum' href='../mongodb/enum.CommandResult.html' title='mongodb::CommandResult'>CommandResult</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2541' class='srclink' href='../src/mongodb/apm/event.rs.html#43-70' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, fmt: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html' title='core::fmt::Error'>Error</a>&gt;</code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "mongodb";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

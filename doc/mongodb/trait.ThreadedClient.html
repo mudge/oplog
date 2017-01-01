@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ThreadedClient` trait in crate `mongodb`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ThreadedClient">
+
+    <title>mongodb::ThreadedClient - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>mongodb</a></p><script>window.sidebarCurrent = {name: 'ThreadedClient', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>mongodb</a>::<wbr><a class='trait' href=''>ThreadedClient</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-2752' class='srclink' href='../src/mongodb/lib.rs.html#193-234' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait ThreadedClient: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
+    fn <a href='#tymethod.connect' class='fnname'>connect</a>(host: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, port: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u16.html'>u16</a>) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;Self&gt;;
+    fn <a href='#tymethod.connect_with_options' class='fnname'>connect_with_options</a>(host: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, port: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u16.html'>u16</a>, <a class='struct' href='../mongodb/struct.ClientOptions.html' title='mongodb::ClientOptions'>ClientOptions</a>) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;Self&gt;;
+    fn <a href='#tymethod.with_uri' class='fnname'>with_uri</a>(uri: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;Self&gt;;
+    fn <a href='#tymethod.with_uri_and_options' class='fnname'>with_uri_and_options</a>(uri: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, options: <a class='struct' href='../mongodb/struct.ClientOptions.html' title='mongodb::ClientOptions'>ClientOptions</a>) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;Self&gt;;
+    fn <a href='#tymethod.with_config' class='fnname'>with_config</a>(config: <a class='struct' href='../mongodb/connstring/struct.ConnectionString.html' title='mongodb::connstring::ConnectionString'>ConnectionString</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; options: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../mongodb/struct.ClientOptions.html' title='mongodb::ClientOptions'>ClientOptions</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; description: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../mongodb/topology/struct.TopologyDescription.html' title='mongodb::topology::TopologyDescription'>TopologyDescription</a>&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;Self&gt;;
+    fn <a href='#tymethod.db' class='fnname'>db</a>(&amp;self, db_name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../mongodb/db/type.Database.html' title='mongodb::db::Database'>Database</a>;
+    fn <a href='#tymethod.db_with_prefs' class='fnname'>db_with_prefs</a>(&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db_name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; read_preference: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../mongodb/common/struct.ReadPreference.html' title='mongodb::common::ReadPreference'>ReadPreference</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; write_concern: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../mongodb/common/struct.WriteConcern.html' title='mongodb::common::WriteConcern'>WriteConcern</a>&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='../mongodb/db/type.Database.html' title='mongodb::db::Database'>Database</a>;
+    fn <a href='#tymethod.acquire_stream' class='fnname'>acquire_stream</a>(&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; read_pref: <a class='struct' href='../mongodb/common/struct.ReadPreference.html' title='mongodb::common::ReadPreference'>ReadPreference</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='struct' href='../mongodb/pool/struct.PooledStream.html' title='mongodb::pool::PooledStream'>PooledStream</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>&gt;;
+    fn <a href='#tymethod.acquire_write_stream' class='fnname'>acquire_write_stream</a>(&amp;self) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='struct' href='../mongodb/pool/struct.PooledStream.html' title='mongodb::pool::PooledStream'>PooledStream</a>&gt;;
+    fn <a href='#tymethod.get_req_id' class='fnname'>get_req_id</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>;
+    fn <a href='#tymethod.database_names' class='fnname'>database_names</a>(&amp;self) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;;
+    fn <a href='#tymethod.drop_database' class='fnname'>drop_database</a>(&amp;self, db_name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;;
+    fn <a href='#tymethod.is_master' class='fnname'>is_master</a>(&amp;self) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>&gt;;
+    fn <a href='#tymethod.add_start_hook' class='fnname'>add_start_hook</a>(&amp;mut self, hook: fn(<a class='type' href='../mongodb/type.Client.html' title='mongodb::Client'>Client</a>, &amp;<a class='struct' href='../mongodb/struct.CommandStarted.html' title='mongodb::CommandStarted'>CommandStarted</a>)) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;;
+    fn <a href='#tymethod.add_completion_hook' class='fnname'>add_completion_hook</a>(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hook: fn(<a class='type' href='../mongodb/type.Client.html' title='mongodb::Client'>Client</a>, &amp;<a class='enum' href='../mongodb/enum.CommandResult.html' title='mongodb::CommandResult'>CommandResult</a>))<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;;
+}</pre>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.connect' class='method stab '><span id='connect.v' class='invisible'><code>fn <a href='#tymethod.connect' class='fnname'>connect</a>(host: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, port: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u16.html'>u16</a>) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Creates a new Client directly connected to a single MongoDB server.</p>
+</div><h3 id='tymethod.connect_with_options' class='method stab '><span id='connect_with_options.v' class='invisible'><code>fn <a href='#tymethod.connect_with_options' class='fnname'>connect_with_options</a>(host: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, port: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u16.html'>u16</a>, <a class='struct' href='../mongodb/struct.ClientOptions.html' title='mongodb::ClientOptions'>ClientOptions</a>) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Creates a new Client directly connected to a single MongoDB server with options.</p>
+</div><h3 id='tymethod.with_uri' class='method stab '><span id='with_uri.v' class='invisible'><code>fn <a href='#tymethod.with_uri' class='fnname'>with_uri</a>(uri: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Creates a new Client connected to a complex topology, such as a
+replica set or sharded cluster.</p>
+</div><h3 id='tymethod.with_uri_and_options' class='method stab '><span id='with_uri_and_options.v' class='invisible'><code>fn <a href='#tymethod.with_uri_and_options' class='fnname'>with_uri_and_options</a>(uri: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, options: <a class='struct' href='../mongodb/struct.ClientOptions.html' title='mongodb::ClientOptions'>ClientOptions</a>) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Creates a new Client connected to a complex topology, such as a
+replica set or sharded cluster, with options.</p>
+</div><h3 id='tymethod.with_config' class='method stab '><span id='with_config.v' class='invisible'><code>fn <a href='#tymethod.with_config' class='fnname'>with_config</a>(config: <a class='struct' href='../mongodb/connstring/struct.ConnectionString.html' title='mongodb::connstring::ConnectionString'>ConnectionString</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; options: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../mongodb/struct.ClientOptions.html' title='mongodb::ClientOptions'>ClientOptions</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; description: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../mongodb/topology/struct.TopologyDescription.html' title='mongodb::topology::TopologyDescription'>TopologyDescription</a>&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;Self&gt;</code></span></h3><div class='docblock'><p>Create a new Client with manual connection configurations.
+<code>connect</code> and <code>with_uri</code> should generally be used as higher-level constructors.</p>
+</div><h3 id='tymethod.db' class='method stab '><span id='db.v' class='invisible'><code>fn <a href='#tymethod.db' class='fnname'>db</a>(&amp;self, db_name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../mongodb/db/type.Database.html' title='mongodb::db::Database'>Database</a></code></span></h3><div class='docblock'><p>Creates a database representation.</p>
+</div><h3 id='tymethod.db_with_prefs' class='method stab '><span id='db_with_prefs.v' class='invisible'><code>fn <a href='#tymethod.db_with_prefs' class='fnname'>db_with_prefs</a>(&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db_name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; read_preference: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../mongodb/common/struct.ReadPreference.html' title='mongodb::common::ReadPreference'>ReadPreference</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; write_concern: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../mongodb/common/struct.WriteConcern.html' title='mongodb::common::WriteConcern'>WriteConcern</a>&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='../mongodb/db/type.Database.html' title='mongodb::db::Database'>Database</a></code></span></h3><div class='docblock'><p>Creates a database representation with custom read and write controls.</p>
+</div><h3 id='tymethod.acquire_stream' class='method stab '><span id='acquire_stream.v' class='invisible'><code>fn <a href='#tymethod.acquire_stream' class='fnname'>acquire_stream</a>(&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; read_pref: <a class='struct' href='../mongodb/common/struct.ReadPreference.html' title='mongodb::common::ReadPreference'>ReadPreference</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='struct' href='../mongodb/pool/struct.PooledStream.html' title='mongodb::pool::PooledStream'>PooledStream</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>&gt;</code></span></h3><div class='docblock'><p>Acquires a connection stream from the pool, along with slave_ok and should_send_read_pref.</p>
+</div><h3 id='tymethod.acquire_write_stream' class='method stab '><span id='acquire_write_stream.v' class='invisible'><code>fn <a href='#tymethod.acquire_write_stream' class='fnname'>acquire_write_stream</a>(&amp;self) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='struct' href='../mongodb/pool/struct.PooledStream.html' title='mongodb::pool::PooledStream'>PooledStream</a>&gt;</code></span></h3><div class='docblock'><p>Acquires a connection stream from the pool for write operations.</p>
+</div><h3 id='tymethod.get_req_id' class='method stab '><span id='get_req_id.v' class='invisible'><code>fn <a href='#tymethod.get_req_id' class='fnname'>get_req_id</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a></code></span></h3><div class='docblock'><p>Returns a unique operational request id.</p>
+</div><h3 id='tymethod.database_names' class='method stab '><span id='database_names.v' class='invisible'><code>fn <a href='#tymethod.database_names' class='fnname'>database_names</a>(&amp;self) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;</code></span></h3><div class='docblock'><p>Returns a list of all database names that exist on the server.</p>
+</div><h3 id='tymethod.drop_database' class='method stab '><span id='drop_database.v' class='invisible'><code>fn <a href='#tymethod.drop_database' class='fnname'>drop_database</a>(&amp;self, db_name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h3><div class='docblock'><p>Drops the database defined by <code>db_name</code>.</p>
+</div><h3 id='tymethod.is_master' class='method stab '><span id='is_master.v' class='invisible'><code>fn <a href='#tymethod.is_master' class='fnname'>is_master</a>(&amp;self) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>&gt;</code></span></h3><div class='docblock'><p>Reports whether this instance is a primary, master, mongos, or standalone mongod instance.</p>
+</div><h3 id='tymethod.add_start_hook' class='method stab '><span id='add_start_hook.v' class='invisible'><code>fn <a href='#tymethod.add_start_hook' class='fnname'>add_start_hook</a>(&amp;mut self, hook: fn(<a class='type' href='../mongodb/type.Client.html' title='mongodb::Client'>Client</a>, &amp;<a class='struct' href='../mongodb/struct.CommandStarted.html' title='mongodb::CommandStarted'>CommandStarted</a>)) -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h3><div class='docblock'><p>Sets a function to be run every time a command starts.</p>
+</div><h3 id='tymethod.add_completion_hook' class='method stab '><span id='add_completion_hook.v' class='invisible'><code>fn <a href='#tymethod.add_completion_hook' class='fnname'>add_completion_hook</a>(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hook: fn(<a class='type' href='../mongodb/type.Client.html' title='mongodb::Client'>Client</a>, &amp;<a class='enum' href='../mongodb/enum.CommandResult.html' title='mongodb::CommandResult'>CommandResult</a>))<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='../mongodb/error/type.Result.html' title='mongodb::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h3><div class='docblock'><p>Sets a function to be run every time a command completes.</p>
+</div></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl ThreadedClient for <a class='type' href='../mongodb/type.Client.html' title='mongodb::Client'>Client</a></code></li>
+</ul><script type="text/javascript" async
+                         src="../implementors/mongodb/trait.ThreadedClient.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "mongodb";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>
