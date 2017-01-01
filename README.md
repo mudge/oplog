@@ -1,9 +1,22 @@
 # Oplog [![Build Status](https://travis-ci.org/mudge/oplog.svg?branch=master)](https://travis-ci.org/mudge/oplog)
 
-This is an in-progress exercise in learning [Rust](https://www.rust-lang.org/)
-by implementing a library that tails a [MongoDB
-oplog](https://docs.mongodb.com/v3.0/core/replica-set-oplog/), exposing it as
-an [`Iterator`](https://doc.rust-lang.org/1.14.0/std/iter/index.html).
+A Rust library for
+[iterating](https://doc.rust-lang.org/1.14.0/std/iter/index.html) over a
+[MongoDB replica set
+oplog](https://docs.mongodb.com/v3.0/core/replica-set-oplog/).
+
+**Current version:** 0.1.0  
+**Supported Rust versions:** 1.14
+
+## Install
+
+Install Oplog by adding the following to your `Cargo.toml`:
+
+```toml
+oplog = "0.1.0"
+```
+
+## Usage
 
 ```rust
 #[macro_use]
@@ -33,12 +46,18 @@ fn main() {
 }
 ```
 
+## Documentation
+
+Full API documentation is available at http://mudge.name/oplog
+
 ## References
 
 * [Iterators, Rust by Example](http://rustbyexample.com/trait/iter.html)
 * [Replication Internals](https://www.kchodorow.com/blog/2010/10/12/replication-internals/)
 * [ripgrep code review](http://blog.mbrt.it/2016-12-01-ripgrep-code-review/)
 * [ripgrep](https://github.com/BurntSushi/ripgrep/)
+
+And many thanks to [Ryman](https://github.com/Ryman) for his help along the way.
 
 ## License
 

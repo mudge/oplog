@@ -2,8 +2,12 @@
 name = "oplog"
 version = "0.1.0"
 authors = ["Paul Mucur <mudge@mudge.name>"]
+description = "Library for iterating over a MongoDB replica set oplog."
+documentation = "https://github.com/mudge/oplog"
+homepage = "https://github.com/mudge/oplog"
 repository = "https://github.com/mudge/oplog"
 readme = "README.md"
+keywords = ["mongodb", "mongo", "oplog"]
 license = "MIT"
 
 [dependencies]
