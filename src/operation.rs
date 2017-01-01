@@ -207,7 +207,7 @@ impl fmt::Display for Operation {
     }
 }
 
-/// Convert a BSON timestamp into a UTC DateTime.
+/// Convert a BSON timestamp into a UTC `DateTime`.
 fn timestamp_to_datetime(timestamp: i64) -> DateTime<UTC> {
     let seconds = timestamp >> 32;
     let nanoseconds = ((timestamp & 0xFFFFFFFF) * 1000000) as u32;
