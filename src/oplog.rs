@@ -14,6 +14,9 @@ use {Operation, Result};
 /// It implements the `Iterator` trait so can be iterated over, yielding successive `Operation`
 /// enums as they are read from the server. This will effectively iterate forever as it will await
 /// new operations.
+///
+/// Any errors raised while tailing the oplog (e.g. a connectivity issue) will cause the iteration
+/// to end.
 pub struct Oplog {
     /// The internal MongoDB cursor for the current position in the oplog.
     cursor: Cursor,
@@ -26,6 +29,7 @@ impl Iterator for Oplog {
         loop {
             match self.cursor.next() {
                 Some(Ok(document)) => return Operation::new(document).ok(),
+                Some(Err(_)) => return None,
                 _ => continue,
             }
         }
