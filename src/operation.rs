@@ -8,7 +8,7 @@
 
 use std::fmt;
 
-use bson::Document;
+use bson::{Bson, Document};
 use chrono::{DateTime, UTC, TimeZone};
 use {Error, Result};
 
@@ -70,6 +70,17 @@ pub enum Operation {
         /// The BSON command.
         command: Document,
     },
+    /// A command to apply multiple oplog operations at once.
+    ApplyOps {
+        /// A unique identifier for this operation.
+        id: i64,
+        /// The time of the operation.
+        timestamp: DateTime<UTC>,
+        /// The full namespace of the operation including its database and collection.
+        namespace: String,
+        /// A vector of operations to apply.
+        operations: Vec<Operation>,
+    },
 }
 
 impl Operation {
@@ -108,6 +119,14 @@ impl Operation {
             "d" => Operation::from_delete(document),
             "c" => Operation::from_command(document),
             op => Err(Error::UnknownOperation(op.into())),
+        }
+    }
+
+    /// Returns an operation from any BSON value.
+    fn from_bson(bson: &Bson) -> Result<Operation> {
+        match *bson {
+            Bson::Document(ref document) => Operation::new(document),
+            _ => Err(Error::InvalidOperation),
         }
     }
 
@@ -173,18 +192,37 @@ impl Operation {
     }
 
     /// Return a command operation for a given document.
+    ///
+    /// Note that this can return either an `Operation::Command` or an `Operation::ApplyOps` when
+    /// successful.
     fn from_command(document: &Document) -> Result<Operation> {
         let h = document.get_i64("h")?;
         let ts = document.get_time_stamp("ts")?;
         let ns = document.get_str("ns")?;
         let o = document.get_document("o")?;
 
-        Ok(Operation::Command {
-            id: h,
-            timestamp: timestamp_to_datetime(ts),
-            namespace: ns.into(),
-            command: o.to_owned(),
-        })
+        match o.get_array("applyOps") {
+            Ok(ops) => {
+                let operations = ops.iter()
+                                    .map(|bson| Operation::from_bson(bson))
+                                    .collect::<Result<Vec<Operation>>>()?;
+
+                Ok(Operation::ApplyOps {
+                    id: h,
+                    timestamp: timestamp_to_datetime(ts),
+                    namespace: ns.into(),
+                    operations: operations,
+                })
+            }
+            Err(_) => {
+                Ok(Operation::Command {
+                    id: h,
+                    timestamp: timestamp_to_datetime(ts),
+                    namespace: ns.into(),
+                    command: o.to_owned(),
+                })
+            }
+        }
     }
 }
 
@@ -226,6 +264,14 @@ impl fmt::Display for Operation {
                        namespace,
                        timestamp,
                        command)
+            }
+            Operation::ApplyOps { id, timestamp, ref namespace, ref operations } => {
+                write!(f,
+                       "ApplyOps #{} {} at {}: {} operations",
+                       id,
+                       namespace,
+                       timestamp,
+                       operations.len())
             }
         }
     }
@@ -386,5 +432,45 @@ mod tests {
             Err(Error::MissingField(err)) => assert_eq!(err, ValueAccessError::NotPresent),
             _ => panic!("Expected missing field."),
         }
+    }
+
+    #[test]
+    fn operation_returns_apply_ops() {
+        let doc = doc! {
+            "ts" => (Bson::TimeStamp(1483789052 << 32)),
+            "h" => (-3262249347345468996i64),
+            "v" => 2,
+            "op" => "c",
+            "ns" => "foo.$cmd",
+            "o" => {
+                "applyOps" => [
+                    {
+                        "ts" => (Bson::TimeStamp(1479561394 << 32)),
+                        "t" => 2,
+                        "h" => (-1742072865587022793i64),
+                        "op" => "i",
+                        "ns" => "foo.bar",
+                        "o" => {
+                            "_id" => 1,
+                            "foo" => "bar"
+                        }
+                    }
+                ]
+            }
+        };
+        let operation = Operation::new(&doc).unwrap();
+
+        assert_eq!(operation,
+                   Operation::ApplyOps {
+                       id: -3262249347345468996i64,
+                       timestamp: UTC.timestamp(1483789052, 0),
+                       namespace: "foo.$cmd".into(),
+                       operations: vec![Operation::Insert {
+                                            id: -1742072865587022793i64,
+                                            timestamp: UTC.timestamp(1479561394, 0),
+                                            namespace: "foo.bar".into(),
+                                            document: doc! { "_id" => 1, "foo" => "bar" },
+                                        }],
+                   });
     }
 }

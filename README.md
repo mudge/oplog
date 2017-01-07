@@ -38,6 +38,7 @@ fn main() {
                 Operation::Update { timestamp, .. } => println!("Update at {}", timestamp),
                 Operation::Delete { timestamp, .. } => println!("Delete at {}", timestamp),
                 Operation::Command { timestamp, .. } => println!("Command at {}", timestamp),
+                Operation::ApplyOps { timestamp, .. } => println!("ApplyOps at {}", timestamp),
             }
         }
     }
@@ -60,6 +61,7 @@ Full API documentation is available at http://mudge.name/oplog
 
 * [Iterators, Rust by Example](http://rustbyexample.com/trait/iter.html)
 * [Replication Internals](https://www.kchodorow.com/blog/2010/10/12/replication-internals/)
+* [applyOps](https://docs.mongodb.com/manual/reference/command/applyOps/)
 * [ripgrep](https://github.com/BurntSushi/ripgrep/) was invaluable as a source of idiomatic Rust code (see also [ripgrep code review](http://blog.mbrt.it/2016-12-01-ripgrep-code-review/))
 
 And many thanks to [Ryman](https://github.com/Ryman) for his help along the way.

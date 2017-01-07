@@ -15,6 +15,7 @@ fn main() {
                 Operation::Update { timestamp, .. } => println!("Update at {}", timestamp),
                 Operation::Delete { timestamp, .. } => println!("Delete at {}", timestamp),
                 Operation::Command { timestamp, .. } => println!("Command at {}", timestamp),
+                Operation::ApplyOps { timestamp, .. } => println!("ApplyOps at {}", timestamp),
             }
         }
     }

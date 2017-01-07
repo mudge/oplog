@@ -77,6 +77,8 @@ pub enum Error {
     /// An error when converting a BSON document to an `Operation` and it has an unsupported
     /// operation type.
     UnknownOperation(String),
+    /// An error when converting an applyOps command with invalid documents.
+    InvalidOperation,
 }
 
 impl error::Error for Error {
@@ -85,6 +87,7 @@ impl error::Error for Error {
             Error::Database(ref err) => err.description(),
             Error::MissingField(ref err) => err.description(),
             Error::UnknownOperation(_) => "unknown operation type",
+            Error::InvalidOperation => "invalid operation",
         }
     }
 }
@@ -95,6 +98,7 @@ impl fmt::Display for Error {
             Error::Database(ref err) => err.fmt(f),
             Error::MissingField(ref err) => err.fmt(f),
             Error::UnknownOperation(ref op) => write!(f, "Unknown operation type found: {}", op),
+            Error::InvalidOperation => write!(f, "Invalid operation"),
         }
     }
 }
