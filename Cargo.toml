@@ -1,6 +1,6 @@
 [package]
 name = "oplog"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Paul Mucur <mudge@mudge.name>"]
 description = "Library for iterating over a MongoDB replica set oplog."
 documentation = "http://mudge.name/oplog"
