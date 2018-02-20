@@ -5,7 +5,7 @@ A Rust library for
 [MongoDB replica set
 oplog](https://docs.mongodb.com/v3.0/core/replica-set-oplog/).
 
-**Current version:** 0.2.0  
+**Current version:** 0.3.0  
 **Supported Rust versions:** 1.14
 
 ## Install
@@ -13,7 +13,7 @@ oplog](https://docs.mongodb.com/v3.0/core/replica-set-oplog/).
 Install Oplog by adding the following to your `Cargo.toml`:
 
 ```toml
-oplog = "0.2.0"
+oplog = "0.3.0"
 ```
 
 ## Usage
@@ -68,6 +68,6 @@ And many thanks to [Ryman](https://github.com/Ryman) for his help along the way.
 
 ## License
 
-Copyright © 2016-2017 Paul Mucur.
+Copyright © 2016-2018 Paul Mucur.
 
 Distributed under the MIT License.
